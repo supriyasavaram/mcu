@@ -66,3 +66,23 @@ input {
     height: 25px;
     width: 200px;
 }
+
+.navbar button {
+  background-color: #161A1D;
+  --text-color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: 0.3s;
+  }
+
+  .navbar button:hover {
+    /* background-color: #ddd; */
+    --text-color: #dd9d9e;
+  }
+  
+  .navbar button.active {
+    background-color: #F17476;
+  }
+  
+  
