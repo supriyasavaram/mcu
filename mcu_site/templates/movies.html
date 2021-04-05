@@ -1,0 +1,15 @@
+  
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{% if movies %}
+    {% for movie in movies %}
+       
+        <h1>{{ movie.title }}</h1>
+        <p>{{ movie.synopsis }}</p>
+
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
