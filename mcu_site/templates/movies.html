@@ -1,4 +1,29 @@
+{% extends 'base.html' %}
 {% load static %}
+{% block content %}
+{% if movies %}
+    <table border="1">
+            <tr>
+                <th>Movie Title</th>
+                <th>Director</th>
+                <th>Year Made</th>
+            </tr>
+            
+    {% for movie in movies %}
+       
+        <tr>
+                <td>{{movie.title}}</td>
+                <td>{{movie.director}}</td>
+                <td>{{movie.year}}</td>
+            </tr>
+        </table>
+
+    {% endfor %}
+{% endif %}
+
+{% endblock %}
+
+{% comment %} {% load static %}
 <!doctype html>
 <html lang='en'>
     <head>
@@ -25,7 +50,7 @@
                     <li><a href="{% url 'about' %}">About</a></li>
                     <li><a href="{% url 'movies' %}">Movies</a></li>
                     <li><a href="{% url 'reviews' %}">Reviews</a></li> {% endcomment %}
-                    <li><button class="tabs" onclick="location.href='{% url 'home' %}'">Home</button></li>
+                    {% comment %} <li><button class="tabs" onclick="location.href='{% url 'home' %}'">Home</button></li>
                     <li><button class="tabs" onclick="location.href='{% url 'about' %}'">About</button></li>
                     <li><button class="tabs active" onclick="location.href='{% url 'movies' %}'">Movies</button></li>
                     <li><button class="tabs" onclick="location.href='{% url 'reviews' %}'">Reviews</button></li>
@@ -41,9 +66,7 @@
                 <a href="{% url 'profile' %}"><span class='circle'></span></a>
             </div>
         </nav>
-        <hr>
-          <h1>movies c:</h1>
-          {% block content %}
-          {% endblock %}
+
       </body>
-</html>
+</html> {% endcomment %}
+
