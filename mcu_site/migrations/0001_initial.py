@@ -18,7 +18,7 @@ class Migration(migrations.Migration):
                 ('year', models.IntegerField()),
 
                 # ('date', models.DateField()),
-                ('time', models.TimeField()),
+                # ('time', models.TimeField()),
             ],
         ),
     ]
