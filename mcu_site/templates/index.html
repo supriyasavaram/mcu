@@ -4,5 +4,9 @@
 {% block title %}MCU Reviews - Home{% endblock %}
 
 {% block content %}
-<p>hi</p>
+    {% if user.is_authenticated %}
+        Welcome back, @{{ user.username }}
+    {% else %}
+        Welcome!
+    {% endif %}
 {% endblock %}
