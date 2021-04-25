@@ -1,0 +1,262 @@
+[{
+    "pk": 1,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Iron Man",
+        "synopsis": "After being held captive in an Afghan cave, billionaire engineer Tony Stark creates a unique weaponized suit of armor to fight evil.",
+        "year": "(2008)",
+        "runtime": "126 min"
+    }
+}, {
+    "pk": 2,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "The Incredible Hulk",
+        "synopsis": "Bruce Banner, a scientist on the run from the U.S. Government, must find a cure for the monster he turns into whenever he loses his temper.",
+        "year": "(2008)",
+        "runtime": "112 min"
+    }
+}, {
+    "pk": 3,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Iron Man 2",
+        "synopsis": "With the world now aware of his identity as Iron Man, Tony Stark must contend with both his declining health and a vengeful mad man with ties to his father's legacy.",
+        "year": "(2010)",
+        "runtime": "124 min"
+    }
+}, {
+    "pk": 4,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Thor",
+        "synopsis": "The powerful but arrogant god Thor is cast out of Asgard to live amongst humans in Midgard (Earth), where he soon becomes one of their finest defenders.",
+        "year": "(2011)",
+        "runtime": "115 min"
+    }
+}, {
+    "pk": 5,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Captain America: The First Avenger",
+        "synopsis": "Steve Rogers, a rejected military soldier, transforms into Captain America after taking a dose of a \"Super-Soldier serum\". But being Captain America comes at a price as he attempts to take down a war monger and a terrorist organization.",
+        "year": "(2011)",
+        "runtime": "124 min"
+    }
+}, {
+    "pk": 6,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "The Avengers",
+        "synopsis": "Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity.",
+        "year": "(2012)",
+        "runtime": "143 min"
+    }
+}, {
+    "pk": 7,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Iron Man Three",
+        "synopsis": "When Tony Stark's world is torn apart by a formidable terrorist called the Mandarin, he starts an odyssey of rebuilding and retribution.",
+        "year": "(2013)",
+        "runtime": "130 min"
+    }
+}, {
+    "pk": 8,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Thor: The Dark World",
+        "synopsis": "When the Dark Elves attempt to plunge the universe into darkness, Thor must embark on a perilous and personal journey that will reunite him with doctor Jane Foster.",
+        "year": "(2013)",
+        "runtime": "112 min"
+    }
+}, {
+    "pk": 9,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Captain America: The Winter Soldier",
+        "synopsis": "As Steve Rogers struggles to embrace his role in the modern world, he teams up with a fellow Avenger and S.H.I.E.L.D agent, Black Widow, to battle a new threat from history: an assassin known as the Winter Soldier.",
+        "year": "(2014)",
+        "runtime": "136 min"
+    }
+}, {
+    "pk": 10,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Guardians of the Galaxy",
+        "synopsis": "A group of intergalactic criminals must pull together to stop a fanatical warrior with plans to purge the universe.",
+        "year": "(2014)",
+        "runtime": "121 min"
+    }
+}, {
+    "pk": 11,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Avengers: Age of Ultron",
+        "synopsis": "When Tony Stark and Bruce Banner try to jump-start a dormant peacekeeping program called Ultron, things go horribly wrong and it's up to Earth's mightiest heroes to stop the villainous Ultron from enacting his terrible plan.",
+        "year": "(2015)",
+        "runtime": "141 min"
+    }
+}, {
+    "pk": 12,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Ant-Man",
+        "synopsis": "Armed with a super-suit with the astonishing ability to shrink in scale but increase in strength, cat burglar Scott Lang must embrace his inner hero and help his mentor, Dr. Hank Pym, plan and pull off a heist that will save the world.",
+        "year": "(2015)",
+        "runtime": "117 min"
+    }
+}, {
+    "pk": 13,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Captain America: Civil War",
+        "synopsis": "Political involvement in the Avengers' affairs causes a rift between Captain America and Iron Man.",
+        "year": "(2016)",
+        "runtime": "147 min"
+    }
+}, {
+    "pk": 14,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Doctor Strange",
+        "synopsis": "While on a journey of physical and spiritual healing, a brilliant neurosurgeon is drawn into the world of the mystic arts.",
+        "year": "(2016)",
+        "runtime": "115 min"
+    }
+}, {
+    "pk": 15,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Guardians of the Galaxy Vol. 2",
+        "synopsis": "The Guardians struggle to keep together as a team while dealing with their personal family issues, notably Star-Lord's encounter with his father the ambitious celestial being Ego.",
+        "year": "(2017)",
+        "runtime": "136 min"
+    }
+}, {
+    "pk": 16,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Spider-Man: Homecoming",
+        "synopsis": "Peter Parker balances his life as an ordinary high school student in Queens with his superhero alter-ego Spider-Man, and finds himself on the trail of a new menace prowling the skies of New York City.",
+        "year": "(2017)",
+        "runtime": "133 min"
+    }
+}, {
+    "pk": 17,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Thor: Ragnarok",
+        "synopsis": "Imprisoned on the planet Sakaar, Thor must race against time to return to Asgard and stop Ragnar\u00f6k, the destruction of his world, at the hands of the powerful and ruthless villain Hela.",
+        "year": "(2017)",
+        "runtime": "130 min"
+    }
+}, {
+    "pk": 18,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Black Panther",
+        "synopsis": "T'Challa, heir to the hidden but advanced kingdom of Wakanda, must step forward to lead his people into a new future and must confront a challenger from his country's past.",
+        "year": "(2018)",
+        "runtime": "134 min"
+    }
+}, {
+    "pk": 19,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Avengers: Infinity War",
+        "synopsis": "The Avengers and their allies must be willing to sacrifice all in an attempt to defeat the powerful Thanos before his blitz of devastation and ruin puts an end to the universe.",
+        "year": "(2018)",
+        "runtime": "149 min"
+    }
+}, {
+    "pk": 20,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Ant-Man and the Wasp",
+        "synopsis": "As Scott Lang balances being both a superhero and a father, Hope van Dyne and Dr. Hank Pym present an urgent new mission that finds the Ant-Man fighting alongside The Wasp to uncover secrets from their past.",
+        "year": "(2018)",
+        "runtime": "118 min"
+    }
+}, {
+    "pk": 21,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Captain Marvel",
+        "synopsis": "Carol Danvers becomes one of the universe's most powerful heroes when Earth is caught in the middle of a galactic war between two alien races.",
+        "year": "(2019)",
+        "runtime": "123 min"
+    }
+}, {
+    "pk": 22,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Avengers: Endgame",
+        "synopsis": "After the devastating events of Avengers: Infinity War (2018), the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe.",
+        "year": "(2019)",
+        "runtime": "181 min"
+    }
+}, {
+    "pk": 23,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Spider-Man: Far from Home",
+        "synopsis": "Following the events of Avengers: Endgame (2019), Spider-Man must step up to take on new threats in a world that has changed forever.",
+        "year": "(2019)",
+        "runtime": "129 min"
+    }
+}, {
+    "pk": 24,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Guardians of the Galaxy Vol. 3",
+        "synopsis": "",
+        "year": "(2023)",
+        "runtime": ""
+    }
+}, {
+    "pk": 25,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Black Widow",
+        "synopsis": "",
+        "year": "(2021)",
+        "runtime": "133 min"
+    }
+}, {
+    "pk": 26,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Eternals",
+        "synopsis": "",
+        "year": "(2021)",
+        "runtime": ""
+    }
+}, {
+    "pk": 27,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Black Panther II",
+        "synopsis": "",
+        "year": "(2022)",
+        "runtime": ""
+    }
+}, {
+    "pk": 28,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Shang-Chi and the Legend of the Ten Rings",
+        "synopsis": "",
+        "year": "(2021)",
+        "runtime": ""
+    }
+}, {
+    "pk": 29,
+    "model": "mcu_site.movie",
+    "fields": {
+        "title": "Doctor Strange in the Multiverse of Madness",
+        "synopsis": "",
+        "year": "(2022)",
+        "runtime": ""
+    }
+}]
