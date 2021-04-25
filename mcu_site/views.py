@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from .models import Movie
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -51,7 +51,7 @@ def signin(request):
     context = {}
     if request.user.is_authenticated:
         return redirect('index')
-    if request.method == "POST" and "login" in request.POST:
+    if request.method == "POST" and "signin" in request.POST:
         username = request.POST['username']
         password = request.POST['password']
         user_auth = authenticate(request, username=username, password=password)
@@ -60,8 +60,12 @@ def signin(request):
             return render(request, 'index.html')
         else:
             context['error'] = "Invalid username/password. Please try again."
-            return render(request, 'events/signin.html', context)
-    return render(request, 'login.html', context)
+            # return render(request, 'events/signin.html', context)
+    return render(request, 'signin.html', context)
+
+def signout(request):
+    logout(request)
+    return redirect('index')
 
 def reset_password(request):
     return render(request, 'reset_password.html')

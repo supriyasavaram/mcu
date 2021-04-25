@@ -4,6 +4,9 @@
 {% block title %}MCU Reviews - Log in to your MCU Reviews Account!{% endblock %}
 
 {% block content %}
+{% if error %}
+    {{ error }}
+{% endif %}
 <form method="post">
     {% csrf_token %}
     <div class="form-group">

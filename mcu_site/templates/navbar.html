@@ -20,10 +20,16 @@
     <a class='navlink-mobile' href="{% url 'reviews' %}">REVIEWS</a>
     <a class='navlink-mobile' onclick="toggleSubmenu()">ACCOUNT</button>
         <div class='navlink-submenu' id='auth'>
+            {% if user.is_authenticated %}
+            <a class='nav-sublink-mobile' href="">SETTINGS</a>
+            <a class='nav-sublink-mobile' href="{% url 'signout' %}">LOG OUT</a>
+            {% else %}
             <a class='nav-sublink-mobile' href="{% url 'signin' %}">LOGIN</a>
             <a class='nav-sublink-mobile' href="{% url 'register' %}">REGISTER</a>
             <a class='nav-sublink-mobile' href="{% url 'reset-password' %}">FORGOT PASSWORD?</a>
+            {% endif %}
         </div>
+
 </div>
 
 <div class='header'>
@@ -39,9 +45,14 @@
         <div class='profile'>
             <i class="fas fa-user-circle fa-2x"></i>
             <div class='auth'>
+                {% if user.is_authenticated %}
+                <a class='nav-sublink-mobile' href="">SETTINGS</a>
+                <a class='nav-sublink-mobile' href="{% url 'signout' %}">LOG OUT</a>
+                {% else %}
                 <a href="{% url 'signin' %}">LOGIN</a>
                 <a href="{% url 'register' %}">REGISTER</a>
                 <a href="{% url 'reset-password' %}">FORGOT PASSWORD</a>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -94,8 +105,7 @@
             burger.style.display = "none";
             exit.style.display = "none";
             nav.style.display = "none";
-        }
-        else {
+        } else {
             burger.style.display = "flex";
         }
     }
