@@ -1,0 +1,107 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'navbar.css' %}">
+
+<div class='header-mobile'>
+    <i id='burger' class="fas fa-bars fa-2x fa-fw"></i>
+    <i id='close' class="fas fa-times fa-2x fa-fw"></i>
+    <a href="{% url 'home' %}"><img src="{% static 'logo.png' %}" alt="MCU Reviews Home" width="100rem"></a>
+    <i id="search" onclick="openSearch()" class="fas fa-search fa-2x fa-fw"></i>
+</div>
+
+<div id="search-mobile" class='search-mobile'>
+    <input type="text" placeholder="searchbar" size="60">
+    <i class="fas fa-search fa-fw"></i>
+</div>
+
+<div class='nav-links-mobile'>
+    <a class='navlink-mobile' href="{% url 'home' %}">HOME</a>
+    <a class='navlink-mobile' href="{% url 'movies' %}">MOVIES</a>
+    <a class='navlink-mobile' href="{% url 'reviews' %}">REVIEWS</a>
+    <a class='navlink-mobile' onclick="toggleSubmenu()">ACCOUNT</button>
+        <div class='navlink-submenu' id='auth'>
+            <a class='nav-sublink-mobile' href="{% url 'reviews' %}">LOGIN</a>
+            <a class='nav-sublink-mobile' href="{% url 'reviews' %}">REGISTER</a>
+            <a class='nav-sublink-mobile' href="{% url 'reviews' %}">FORGOT PASSWORD?</a>
+        </div>
+</div>
+
+<div class='header'>
+    <div class='logo'>
+        <a href="{% url 'home' %}"><img src="{% static 'logo.png' %}" alt="MCU Reviews Home" width="200rem"></a>
+    </div>
+
+    <div class='header-right'>
+        <div class='search'>
+            <input type="text" placeholder="search">
+            <a href=""><i id='search-icon' class="fas fa-search"></i></a>
+        </div>
+        <div class='profile'>
+            <i class="fas fa-user-circle fa-2x"></i>
+            <div class='auth'>
+                <a href="">LOGIN</a>
+                <a href="">REGISTER</a>
+                <a href="">FORGOT PASSWORD</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<nav class='navbar'>
+    <a class='nav-link' href="{% url 'home' %}">HOME</a>
+    <a class='nav-link' href="{% url 'movies' %}">MOVIES</a>
+    <a class='nav-link' href="{% url 'reviews' %}">REVIEWS</a>
+</nav>
+
+<p id='temp'>hi</p>
+
+<script>
+    function toggleSubmenu() {
+        var submenu = document.getElementById('auth');
+        if (submenu.style.display == "flex") {
+            submenu.style.display = "none";
+        } else {
+            submenu.style.display = "flex";
+        }
+    }
+
+    var burger = document.getElementById('burger');
+    var exit = document.getElementById('close');
+    var nav = document.getElementsByClassName('nav-links-mobile')[0];
+    burger.onclick = function () {
+        burger.style.display = "none";
+        exit.style.display = "flex";
+        nav.style.display = "flex";
+    }
+
+    exit.onclick = function () {
+        exit.style.display = "none";
+        burger.style.display = "flex";
+        nav.style.display = "none";
+    }
+
+    var searchbar = document.getElementById("search-mobile");
+
+    function openSearch() {
+        if (searchbar.style.display === "flex") {
+            searchbar.style.display = "none";
+        } else {
+            searchbar.style.display = "flex";
+        }
+    }
+
+    function sizing() {
+        if (window.innerWidth > 500) {
+            searchbar.style.display = "none";
+            burger.style.display = "none";
+            exit.style.display = "none";
+            nav.style.display = "none";
+        }
+        else {
+            burger.style.display = "flex";
+        }
+    }
+
+    window.onload = sizing;
+    window.addEventListener('resize', sizing);
+</script>

@@ -1,40 +1,25 @@
 {% load static %}
 <!doctype html>
 <html lang='en'>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
-        <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">    
-    
-        <title>{% block title %}{% endblock %}</title>
-      </head>
-      <body>
-        <nav class='vert-center'>
-            
-            <div class="brand-logo vert-center">
-                <span class="circle"></span>
-                brandname
-            </div>
 
-            <div class='navbar'>
-                <ul>
-                    <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'movies' %}">Movies</a></li>
-                    <li><a href="{% url 'reviews' %}">Reviews</a></li>
-                </ul>
-            </div>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-            <div class='vert-center'>
-                <input type="text">
-                <a href="{% url 'profile' %}"><span class='circle'></span></a>
-            </div>
-        </nav>
-        <hr>
-          {% block content %}
-          {% endblock %}
-      </body>
+    <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap"
+        rel="stylesheet">
+    <script src="https://kit.fontawesome.com/3b408a1796.js" crossorigin="anonymous"></script>
+
+    <title>{% block title %}{% endblock %}</title>
+</head>
+
+<body>
+    {% include 'navbar.html' %}
+    {% block content %}
+    {% endblock %}
+</body>
+
 </html>

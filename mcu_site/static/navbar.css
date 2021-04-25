@@ -1,0 +1,136 @@
+html {
+    --background-color: #161A1D;
+    --text-color: white;
+    --text-color-highlight: #F17476;
+    --text-color-highlight-hover: #e76062;
+    --text-color-muted: #D8D8D8;
+    --button-color: #E5383B;
+    --star-color: #FDFFB6;
+    --footer-color: #34383A;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 1rem;
+}
+
+.header-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    margin: 0 0 0 1rem;
+    position: relative;
+    display: inline-block;
+}
+
+.search {
+    /* margin: 0 .5rem; */
+    padding: .5rem;
+    border: 1px solid white;
+}
+
+.search-mobile {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: .5rem;
+    border: 1px solid white;
+}
+
+.navbar {
+    padding: 1rem;
+    text-align: center;
+    border-top: 1.5px solid white;
+    border-bottom: 1.5px solid white;
+}
+
+.nav-link {
+    margin: 2rem;
+    font-weight: bold;
+}
+
+.auth {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 10rem;
+    z-index: 1;
+    border: 1px solid var(--text-color);
+}
+
+.auth a {
+    text-align: right;
+    color: var(--text-color);
+    padding: .5rem .75rem;
+    display: block;
+    font-size: small;
+}
+
+.auth a:hover {
+    color: var(--text-color-muted)
+}
+
+.profile:hover .auth {
+    display: block;
+}
+
+.header-mobile {
+    display: none;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: .5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid white;
+}
+
+.nav-links-mobile {
+    display: none;
+    flex-direction: column;
+    text-align: center;
+    padding: 1rem;
+    padding-bottom: 1.5rem;
+    font-weight: bold;
+    font-size: medium;
+    border-bottom: 1px solid white;
+}
+
+.navlink-mobile {
+    margin-top: .5rem;
+    cursor:pointer;
+}
+
+#burger, #close, #search {
+    cursor:pointer;
+}
+
+.navlink-submenu {
+    display: none;
+    flex-direction: column;
+}
+
+.nav-sublink-mobile {
+    font-size: small;
+}
+
+#auth, #close {
+    display: none;
+    
+}
+
+@media only screen and (max-width:500px) {
+    .header, .navbar, .nav-links-mobile {
+        display: none;
+    }
+
+    .header-mobile {
+        display: flex;
+    }
+}
