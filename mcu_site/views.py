@@ -1,6 +1,14 @@
-from django.shortcuts import render
-from .models import MovieDetails
-from .models import AccountDetails
+from django.shortcuts import render, redirect, get_object_or_404, reverse
+from .models import Movie,Review
+from .forms import CreateReviewForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, forms
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+import datetime
+
+from .forms import CreateUserForm
 
 def index(request):
     return render(request, 'index.html')
@@ -12,44 +20,71 @@ def about(request):
     return render(request, 'about.html')
 
 def movies(request):
-    all_movies = MovieDetails.objects.all()
+    all_movies = Movie.objects.all()
     context = {
         'movies':all_movies
     }
-    return render(request, 'movies.html',context)
+    return render(request, 'movies.html', context)
 
 def reviews(request):
-    return render(request, 'reviews.html')
+    context={'error':''}
+    if request.method == "POST" and "reviews" in request.POST:
+        form = CreateReviewForm(request.POST)
+        if form.is_valid():
+            form.stars = form.cleaned_data.get('stars')
+            form.review_text = form.cleaned_data.get('review_text')
+            form.id=request.user.id
+            form.save()
+            # messages.success(request, "Account created!")
+            
+            context = {'error' : 'created review'}
+        else:
+            context = {'form': form}
+    return render(request, 'reviews.html',context)
 
 def profile(request):
-    return render(request, 'profile.html')
+    all_reviews = Review.objects.all()
+    context = {
+        'reviews':all_reviews
+    }
+    return render(request, 'profile.html',context)
 
 def register(request):
-    if request.method == 'POST':
-            if request.POST.get('username') and request.POST.get('password'):
-                post=AccountDetails()
-                post.username= request.POST.get('username')
-                post.password= request.POST.get('password')
-                post.save()
-                
-                return render(request, 'register.html')  
+    context = {'error': ''}
+    if request.user.is_authenticated:
+        return redirect('index')
+    if request.method == "POST" and "register" in request.POST:
+        form = CreateUserForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            form.save()
+            # messages.success(request, "Account created!")
+            user = authenticate(request, username=username, password=password)
+            context = {'error' : 'created account'}
+        else:
+            context = {'form': form}
+    return render(request, 'register.html', context)
 
-    else:
-        return render(request, 'register.html')
+def signin(request):
+    context = {}
+    if request.user.is_authenticated:
+        return redirect('index')
+    if request.method == "POST" and "signin" in request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        user_auth = authenticate(request, username=username, password=password)
+        if user_auth is not None:
+            login(request, user_auth)
+            return render(request, 'index.html')
+        else:
+            context['error'] = "Invalid username/password. Please try again."
+            # return render(request, 'events/signin.html', context)
+    return render(request, 'signin.html', context)
 
-def login(request):
-    # all_accounts = AccountDetails.objects.all()
-    # context = {
-    #     'accounts':all_accounts
-    # }
-    if request.method == 'POST':
-            if AccountDetails.objects.filter(username=request.POST['username'], password=request.POST['password']).exists():
-                print("hello")
-                return render(request, 'base.html')  
-            else:
-                return render(request, 'login.html')
-            
-            
+def signout(request):
+    logout(request)
+    return redirect('index')
 
-    else:
-        return render(request, 'login.html')
+def reset_password(request):
+    return render(request, 'reset_password.html')

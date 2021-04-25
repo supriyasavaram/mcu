@@ -1,72 +1,15 @@
+  
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
 {% if movies %}
-    <table border="1">
-            <tr>
-                <th>Movie Title</th>
-                <th>Director</th>
-                <th>Year Made</th>
-            </tr>
-            
     {% for movie in movies %}
        
-        <tr>
-                <td>{{movie.title}}</td>
-                <td>{{movie.director}}</td>
-                <td>{{movie.year}}</td>
-            </tr>
-        </table>
+        <h1>{{ movie.title }}</h1>
+        <p>{{ movie.synopsis }}</p>
 
     {% endfor %}
 {% endif %}
 
 {% endblock %}
-
-{% comment %} {% load static %}
-<!doctype html>
-<html lang='en'>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        
-        <link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">    
-    
-        <title>{% block title %}{% endblock %}</title>
-      </head>
-      <body>
-        <nav class='vert-center'>
-            
-            <div class="brand-logo vert-center">
-                <span class="circle"></span>
-                brandname
-            </div>
-
-            <div class='navbar'>
-                <ul>
-                    {% comment %} <li><a href="{% url 'home' %}">Home</a></li>
-                    <li><a href="{% url 'about' %}">About</a></li>
-                    <li><a href="{% url 'movies' %}">Movies</a></li>
-                    <li><a href="{% url 'reviews' %}">Reviews</a></li> {% endcomment %}
-                    {% comment %} <li><button class="tabs" onclick="location.href='{% url 'home' %}'">Home</button></li>
-                    <li><button class="tabs" onclick="location.href='{% url 'about' %}'">About</button></li>
-                    <li><button class="tabs active" onclick="location.href='{% url 'movies' %}'">Movies</button></li>
-                    <li><button class="tabs" onclick="location.href='{% url 'reviews' %}'">Reviews</button></li>
-                </ul>
-            </div>
-
-            
-
-
-
-            <div class='vert-center'>
-                <input type="text">
-                <a href="{% url 'profile' %}"><span class='circle'></span></a>
-            </div>
-        </nav>
-
-      </body>
-</html> {% endcomment %}
-

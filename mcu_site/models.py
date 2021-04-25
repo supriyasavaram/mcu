@@ -1,21 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 import datetime
-# Create your models here.
-
-#Movie Details from phpMyAdmin
-class MovieDetails(models.Model):
-    #id = models.AutoField(primary_key=True,default="")
-    title = models.CharField(max_length=255,default="",editable=False)
-    director = models.CharField(max_length=255,default="",editable=False)
-    year = models.IntegerField()
-    
-
-class AccountDetails(models.Model):
-    #id = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=255,default="",editable=False)
-    password = models.CharField(max_length=255,default="",editable=False)
-
 
 class Person(models.Model):
     first_name = models.CharField(max_length=32)
@@ -50,6 +35,7 @@ class CharacterPlayed(models.Model):
 #     alignment = models.CharField(max_length=150)
 
 class Review(models.Model):
+    #title = models.TextField(max_length=2048)
     stars = models.IntegerField()
     date_written = models.DateTimeField(auto_now_add=True)
     review_text = models.TextField(max_length=2048)

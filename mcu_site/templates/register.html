@@ -1,31 +1,51 @@
 {% extends 'base.html' %}
 {% load static %}
+
+{% block title %}MCU Reviews - Register for a New Account!{% endblock %}
+
 {% block content %}
-	<head>
-	<title>Registration form</title>
-	<link rel="stylesheet" type="text/css" href="{% static 'main.css' %}">
-	</head>
-	<body>
-	<div class="header">
-		<h2>Register</h2>
-	</div>
-		
-	<form  action="" method="POST">
-		{% csrf_token %}
-		<div class="input-group">
-			<label>Username</label>
-			<input type="text" name="username" value="">
-		</div>
-		<div class="input-group">
-			<label>Password</label>
-			<input type="text" name="password">
-		</div>
-		<div class="input-group">
-			<button type="submit" class="btn" name="reg_user">Register</button>
-		</div>
-		<p>
-			Already a member? <a href="login">Sign in</a>
-		</p>
-	</form>
-	</body>
+<h2>Register for a new MCU Reviews account!</h2>
+{% if error %}
+{{ error }}
+{% endif %}
+{% if form.errors %}
+    {% for field in form %}
+        {% for error in field.errors %}
+            <p> {{ error }} </p>
+        {% endfor %}
+    {% endfor %}
+{% endif %}
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username" class="form-input" placeholder="mculover23">
+    </div>
+    <div class="form-group">
+        <label for="first_name">First Name</label>
+        <input type="text" name="first_name" id="first_name" class="form-input" placeholder="John">
+    </div>
+    <div class="form-group">
+        <label for="last_name">Last Name</label>
+        <input type="text" name="last_name" id="last_name" class="form-input" placeholder="Doe">
+    </div>
+    <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" name="email" id="email" class="form-input" placeholder="johndoe@email.com">
+    </div>
+    <div class="form-group">
+        <label for="password1">Password</label>
+        <input type="password" name="password1" id="password1" class="form-input" placeholder="********">
+    </div>
+    <div class="form-group">
+        <label for="password2">Confirm Password</label>
+        <input type="password" name="password2" id="password2" class="form-input" placeholder="********">
+    </div>
+
+    <div class="form-group">
+        <button name="register" class='btn round'>
+            Create Account
+        </button>
+    </div>
+</form>
 {% endblock %}
