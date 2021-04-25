@@ -1,3 +1,5 @@
 Django
 django-environ
 mysqlclient
+bs4
+requests
