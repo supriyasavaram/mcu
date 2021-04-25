@@ -20,17 +20,18 @@ html {
     color: var(--text-color);
 }
 
-h1,h2{
+h1 {
     color: var(--text-color-highlight);
 }
 
-h3,h4,h5,h6 {
-    color: black;
+h2,h3,h4,h5,h6 {
+    color: white;
 }
 
 input {
     border: 0;
     outline: none;
+    border-radius: .25rem;
 }
 
 a:link, a:visited, a:hover, a:active {
@@ -49,4 +50,36 @@ button {
 
 button:hover {
     color: var(--text-color-muted);
+}
+
+.container {
+    margin: 2rem 3rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    margin: 1em 0;
+}
+
+.form-input {
+    padding: .5rem;
+    border: 1px solid white;
+    margin: .5rem 0;
+}
+
+.btn {
+    padding: .5rem;
+    border: 1px solid white;
+    background-color: var(--text-color-highlight);
+}
+
+.btn:hover {
+    color: white;
+    background-color: var(--text-color-highlight-hover);
+}
+
+.round {
+    border-radius: .5rem;
 }
