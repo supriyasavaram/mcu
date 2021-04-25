@@ -47,8 +47,21 @@ def register(request):
             context = {'form': form}
     return render(request, 'register.html', context)
 
-def login(request):
-    return render(request, 'login.html')
+def signin(request):
+    context = {}
+    if request.user.is_authenticated:
+        return redirect('index')
+    if request.method == "POST" and "login" in request.POST:
+        username = request.POST['username']
+        password = request.POST['password']
+        user_auth = authenticate(request, username=username, password=password)
+        if user_auth is not None:
+            login(request, user_auth)
+            return render(request, 'index.html')
+        else:
+            context['error'] = "Invalid username/password. Please try again."
+            return render(request, 'events/signin.html', context)
+    return render(request, 'login.html', context)
 
 def reset_password(request):
     return render(request, 'reset_password.html')

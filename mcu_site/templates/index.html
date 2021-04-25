@@ -4,5 +4,7 @@
 {% block title %}MCU Reviews - Home{% endblock %}
 
 {% block content %}
-
+{% if user.is_authenticated %}
+Welcome back, @{{ user.username }}
+{% endif %}
 {% endblock %}

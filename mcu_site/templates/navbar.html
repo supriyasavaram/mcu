@@ -20,7 +20,7 @@
     <a class='navlink-mobile' href="{% url 'reviews' %}">REVIEWS</a>
     <a class='navlink-mobile' onclick="toggleSubmenu()">ACCOUNT</button>
         <div class='navlink-submenu' id='auth'>
-            <a class='nav-sublink-mobile' href="{% url 'login' %}">LOGIN</a>
+            <a class='nav-sublink-mobile' href="{% url 'signin' %}">LOGIN</a>
             <a class='nav-sublink-mobile' href="{% url 'register' %}">REGISTER</a>
             <a class='nav-sublink-mobile' href="{% url 'reset-password' %}">FORGOT PASSWORD?</a>
         </div>
@@ -39,7 +39,7 @@
         <div class='profile'>
             <i class="fas fa-user-circle fa-2x"></i>
             <div class='auth'>
-                <a href="{% url 'login' %}">LOGIN</a>
+                <a href="{% url 'signin' %}">LOGIN</a>
                 <a href="{% url 'register' %}">REGISTER</a>
                 <a href="{% url 'reset-password' %}">FORGOT PASSWORD</a>
             </div>
