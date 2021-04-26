@@ -4,12 +4,26 @@
 {% block content %}
 
 {% if movies %}
-    {% for movie in movies %}
-       
-        <h1>{{ movie.title }}</h1>
-        <p>{{ movie.synopsis }}</p>
+    <table>
+            <th>Title</th>
+            <th>Synopsis</th>
+            <th>Year Released</th>
+            <th>Runtime</th>
+            {% for movie in movies %}
+                
+                <tr>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.synopsis }}</td>
+                    <td>{{ movie.year }}</td>
+                    <td>{{ movie.runtime }}</td>
+                </tr>
+                
+                
 
-    {% endfor %}
+            {% endfor %}
+</table>
 {% endif %}
+
+
 
 {% endblock %}
