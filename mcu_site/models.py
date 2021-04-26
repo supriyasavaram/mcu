@@ -16,11 +16,18 @@ class Director(models.Model):
 class Movie(models.Model):
     title = models.CharField(max_length=150)
     synopsis = models.CharField(max_length=2048)
-    date = models.DateField()
-    runtime = models.DurationField(null=True, blank=True, default=datetime.timedelta(days=0, hours=0))
-    actors = models.ManyToManyField(Actor, through='CharacterPlayed')
-    directors = models.ManyToManyField(Director)
-
+    year = models.CharField(max_length=10)
+    runtime = models.CharField(max_length=32)
+    actors = models.ManyToManyField(Actor, through='CharacterPlayed', blank=True)
+    directors = models.ManyToManyField(Director, blank=True)
+    
+    def add_movie(self, title):
+        movie = self.create(title=title)
+        return movie
+    
+    def __str__(self):
+        return self.title + " " + self.year
+        
 class CharacterPlayed(models.Model):
     character_name = models.CharField(max_length=32)
     actor = models.ForeignKey(Actor, on_delete=models.DO_NOTHING)
@@ -35,7 +42,7 @@ class CharacterPlayed(models.Model):
 #     alignment = models.CharField(max_length=150)
 
 class Review(models.Model):
-    #title = models.TextField(max_length=2048)
+    title = models.ForeignKey(Movie, on_delete=models.DO_NOTHING)
     stars = models.IntegerField()
     date_written = models.DateTimeField(auto_now_add=True)
     review_text = models.TextField(max_length=2048)
