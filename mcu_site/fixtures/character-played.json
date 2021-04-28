@@ -1,0 +1,953 @@
+[{
+    "model": "mcu_site.characterplayed",
+    "pk": 1,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 1
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 2,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 3
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 3,
+    "fields": {
+        "character_name": "Pepper Potts",
+        "actor": 2,
+        "movie": 1
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 4,
+    "fields": {
+        "character_name": "Rhodey",
+        "actor": 3,
+        "movie": 1
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 5,
+    "fields": {
+        "character_name": "Obadiah Stane",
+        "actor": 4,
+        "movie": 1
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 6,
+    "fields": {
+        "character_name": "General 'Thunderbolt' Ross",
+        "actor": 8,
+        "movie": 2
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 7,
+    "fields": {
+        "character_name": "Bruce Banner",
+        "actor": 5,
+        "movie": 2
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 8,
+    "fields": {
+        "character_name": "Betty Ross",
+        "actor": 6,
+        "movie": 2
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 9,
+    "fields": {
+        "character_name": "Emil Blonsky",
+        "actor": 7,
+        "movie": 2
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 10,
+    "fields": {
+        "character_name": "Ivan Vanko",
+        "actor": 9,
+        "movie": 3
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 11,
+    "fields": {
+        "character_name": "Pepper Potts",
+        "actor": 2,
+        "movie": 3
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 12,
+    "fields": {
+        "character_name": "Lt. Col. James 'Rhodey' Rhodes",
+        "actor": 10,
+        "movie": 3
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 13,
+    "fields": {
+        "character_name": "Thor",
+        "actor": 11,
+        "movie": 4
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 14,
+    "fields": {
+        "character_name": "Odin",
+        "actor": 12,
+        "movie": 4
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 15,
+    "fields": {
+        "character_name": "Jane Foster",
+        "actor": 13,
+        "movie": 4
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 16,
+    "fields": {
+        "character_name": "Loki",
+        "actor": 14,
+        "movie": 4
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 17,
+    "fields": {
+        "character_name": "Johann Schmidt / Red Skull",
+        "actor": 16,
+        "movie": 5
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 18,
+    "fields": {
+        "character_name": "Nick Fury",
+        "actor": 17,
+        "movie": 5
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 19,
+    "fields": {
+        "character_name": "Peggy Carter",
+        "actor": 18,
+        "movie": 5
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 20,
+    "fields": {
+        "character_name": "Captain America / Steve Rogers",
+        "actor": 15,
+        "movie": 5
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 21,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 6
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 22,
+    "fields": {
+        "character_name": "Natasha Romanoff / Black Widow",
+        "actor": 19,
+        "movie": 6
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 23,
+    "fields": {
+        "character_name": "Clint Barton / Hawkeye",
+        "actor": 20,
+        "movie": 6
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 24,
+    "fields": {
+        "character_name": "Captain America / Steve Rogers",
+        "actor": 15,
+        "movie": 6
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 25,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 7
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 26,
+    "fields": {
+        "character_name": "Pepper Potts",
+        "actor": 2,
+        "movie": 7
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 27,
+    "fields": {
+        "character_name": "Lt. Col. James 'Rhodey' Rhodes",
+        "actor": 10,
+        "movie": 7
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 28,
+    "fields": {
+        "character_name": "Aldrich Killian",
+        "actor": 21,
+        "movie": 7
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 29,
+    "fields": {
+        "character_name": "Thor",
+        "actor": 11,
+        "movie": 8
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 30,
+    "fields": {
+        "character_name": "Jane Foster",
+        "actor": 13,
+        "movie": 8
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 31,
+    "fields": {
+        "character_name": "Loki",
+        "actor": 14,
+        "movie": 8
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 32,
+    "fields": {
+        "character_name": "Erik Selvig",
+        "actor": 22,
+        "movie": 8
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 33,
+    "fields": {
+        "character_name": "Nick Fury",
+        "actor": 17,
+        "movie": 9
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 34,
+    "fields": {
+        "character_name": "Natasha Romanoff / Black Widow",
+        "actor": 19,
+        "movie": 9
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 35,
+    "fields": {
+        "character_name": "Dr. Fine (as Gozie Agbo)",
+        "actor": 23,
+        "movie": 9
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 36,
+    "fields": {
+        "character_name": "Alexander Pierce",
+        "actor": 24,
+        "movie": 9
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 37,
+    "fields": {
+        "character_name": "Captain America / Steve Rogers",
+        "actor": 15,
+        "movie": 9
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 38,
+    "fields": {
+        "character_name": "Peter Quill",
+        "actor": 25,
+        "movie": 10
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 39,
+    "fields": {
+        "character_name": "Groot",
+        "actor": 26,
+        "movie": 10
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 40,
+    "fields": {
+        "character_name": "Rocket",
+        "actor": 27,
+        "movie": 10
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 41,
+    "fields": {
+        "character_name": "Gamora",
+        "actor": 28,
+        "movie": 10
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 42,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 11
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 43,
+    "fields": {
+        "character_name": "Thor",
+        "actor": 11,
+        "movie": 11
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 44,
+    "fields": {
+        "character_name": "Bruce Banner / The Hulk",
+        "actor": 29,
+        "movie": 11
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 45,
+    "fields": {
+        "character_name": "Captain America / Steve Rogers",
+        "actor": 15,
+        "movie": 11
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 46,
+    "fields": {
+        "character_name": "Darren Cross / Yellowjacket",
+        "actor": 32,
+        "movie": 12
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 47,
+    "fields": {
+        "character_name": "Hope Van Dyne / Wasp",
+        "actor": 33,
+        "movie": 12
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 48,
+    "fields": {
+        "character_name": "Scott Lang / Ant-Man",
+        "actor": 30,
+        "movie": 12
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 49,
+    "fields": {
+        "character_name": "Dr. Hank Pym",
+        "actor": 31,
+        "movie": 12
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 50,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 13
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 51,
+    "fields": {
+        "character_name": "Bucky Barnes / Winter Soldier",
+        "actor": 34,
+        "movie": 13
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 52,
+    "fields": {
+        "character_name": "Natasha Romanoff / Black Widow",
+        "actor": 19,
+        "movie": 13
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 53,
+    "fields": {
+        "character_name": "Dr. Fine (as Gozie Agbo)",
+        "actor": 23,
+        "movie": 13
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 54,
+    "fields": {
+        "character_name": "Captain America / Steve Rogers",
+        "actor": 15,
+        "movie": 13
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 55,
+    "fields": {
+        "character_name": "Dr. Stephen Strange",
+        "actor": 35,
+        "movie": 14
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 56,
+    "fields": {
+        "character_name": "Mordo",
+        "actor": 36,
+        "movie": 14
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 57,
+    "fields": {
+        "character_name": "Dr. Christine Palmer",
+        "actor": 37,
+        "movie": 14
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 58,
+    "fields": {
+        "character_name": "Wong",
+        "actor": 38,
+        "movie": 14
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 59,
+    "fields": {
+        "character_name": "Peter Quill",
+        "actor": 25,
+        "movie": 15
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 60,
+    "fields": {
+        "character_name": "Groot",
+        "actor": 26,
+        "movie": 15
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 61,
+    "fields": {
+        "character_name": "Gamora",
+        "actor": 28,
+        "movie": 15
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 62,
+    "fields": {
+        "character_name": "Drax",
+        "actor": 39,
+        "movie": 15
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 63,
+    "fields": {
+        "character_name": "Peter Parker / Spider-Man",
+        "actor": 40,
+        "movie": 16
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 64,
+    "fields": {
+        "character_name": "Adrian Toomes / Vulture",
+        "actor": 41,
+        "movie": 16
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 65,
+    "fields": {
+        "character_name": "May Parker",
+        "actor": 42,
+        "movie": 16
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 66,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 16
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 67,
+    "fields": {
+        "character_name": "Hela",
+        "actor": 43,
+        "movie": 17
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 68,
+    "fields": {
+        "character_name": "Thor",
+        "actor": 11,
+        "movie": 17
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 69,
+    "fields": {
+        "character_name": "Bruce Banner / The Hulk",
+        "actor": 29,
+        "movie": 17
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 70,
+    "fields": {
+        "character_name": "Loki",
+        "actor": 14,
+        "movie": 17
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 71,
+    "fields": {
+        "character_name": "T'Challa / Black Panther",
+        "actor": 44,
+        "movie": 18
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 72,
+    "fields": {
+        "character_name": "Erik Killmonger",
+        "actor": 45,
+        "movie": 18
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 73,
+    "fields": {
+        "character_name": "Nakia",
+        "actor": 46,
+        "movie": 18
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 74,
+    "fields": {
+        "character_name": "Okoye",
+        "actor": 47,
+        "movie": 18
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 75,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 19
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 76,
+    "fields": {
+        "character_name": "Dr. Fine (as Gozie Agbo)",
+        "actor": 23,
+        "movie": 19
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 77,
+    "fields": {
+        "character_name": "Thor",
+        "actor": 11,
+        "movie": 19
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 78,
+    "fields": {
+        "character_name": "Bruce Banner / The Hulk",
+        "actor": 29,
+        "movie": 19
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 79,
+    "fields": {
+        "character_name": "Captain America / Steve Rogers",
+        "actor": 15,
+        "movie": 19
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 80,
+    "fields": {
+        "character_name": "Luis",
+        "actor": 48,
+        "movie": 20
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 81,
+    "fields": {
+        "character_name": "Hope Van Dyne / Wasp",
+        "actor": 33,
+        "movie": 20
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 82,
+    "fields": {
+        "character_name": "Scott Lang / Ant-Man",
+        "actor": 30,
+        "movie": 20
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 83,
+    "fields": {
+        "character_name": "Sonny Burch",
+        "actor": 49,
+        "movie": 20
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 84,
+    "fields": {
+        "character_name": "Nick Fury",
+        "actor": 17,
+        "movie": 21
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 85,
+    "fields": {
+        "character_name": "N/A",
+        "actor": 50,
+        "movie": 21
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 86,
+    "fields": {
+        "character_name": "Carol Danvers / Vers / Captain",
+        "actor": 51,
+        "movie": 21
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 87,
+    "fields": {
+        "character_name": "Talos",
+        "actor": 52,
+        "movie": 21
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 88,
+    "fields": {
+        "character_name": "Yon-Rogg",
+        "actor": 53,
+        "movie": 21
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 89,
+    "fields": {
+        "character_name": "Iron Man",
+        "actor": 1,
+        "movie": 22
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 90,
+    "fields": {
+        "character_name": "Dr. Fine (as Gozie Agbo)",
+        "actor": 23,
+        "movie": 22
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 91,
+    "fields": {
+        "character_name": "Thor",
+        "actor": 11,
+        "movie": 22
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 92,
+    "fields": {
+        "character_name": "Bruce Banner / The Hulk",
+        "actor": 29,
+        "movie": 22
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 93,
+    "fields": {
+        "character_name": "Captain America / Steve Rogers",
+        "actor": 15,
+        "movie": 22
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 94,
+    "fields": {
+        "character_name": "Peter Parker / Spider-Man",
+        "actor": 40,
+        "movie": 23
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 95,
+    "fields": {
+        "character_name": "Nick Fury",
+        "actor": 17,
+        "movie": 23
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 96,
+    "fields": {
+        "character_name": "May Parker",
+        "actor": 42,
+        "movie": 23
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 97,
+    "fields": {
+        "character_name": "Quentin Beck / Mysterio",
+        "actor": 54,
+        "movie": 23
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 98,
+    "fields": {
+        "character_name": "Ayesha",
+        "actor": 56,
+        "movie": 24
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 99,
+    "fields": {
+        "character_name": "Nebula",
+        "actor": 57,
+        "movie": 24
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 100,
+    "fields": {
+        "character_name": "Gamora",
+        "actor": 28,
+        "movie": 24
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 101,
+    "fields": {
+        "character_name": "Mantis",
+        "actor": 55,
+        "movie": 24
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 102,
+    "fields": {
+        "character_name": "Alexei Shostakov / Red Guardian",
+        "actor": 59,
+        "movie": 25
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 103,
+    "fields": {
+        "character_name": "Yelena Belova",
+        "actor": 58,
+        "movie": 25
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 104,
+    "fields": {
+        "character_name": "Natasha Romanoff / Black Widow",
+        "actor": 19,
+        "movie": 25
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 105,
+    "fields": {
+        "character_name": "Melina Vostokoff",
+        "actor": 60,
+        "movie": 25
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 106,
+    "fields": {
+        "character_name": "Ikaris",
+        "actor": 64,
+        "movie": 26
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 107,
+    "fields": {
+        "character_name": "Thena",
+        "actor": 61,
+        "movie": 26
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 108,
+    "fields": {
+        "character_name": "Ajak",
+        "actor": 62,
+        "movie": 26
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 109,
+    "fields": {
+        "character_name": "Sersi",
+        "actor": 63,
+        "movie": 26
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 110,
+    "fields": {
+        "character_name": "Everett K. Ross",
+        "actor": 65,
+        "movie": 27
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 111,
+    "fields": {
+        "character_name": "Okoye",
+        "actor": 47,
+        "movie": 27
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 112,
+    "fields": {
+        "character_name": "Shang-Chi",
+        "actor": 66,
+        "movie": 28
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 113,
+    "fields": {
+        "character_name": "Katy",
+        "actor": 67,
+        "movie": 28
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 114,
+    "fields": {
+        "character_name": "Wenwu",
+        "actor": 68,
+        "movie": 28
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 115,
+    "fields": {
+        "character_name": "Jiang Li",
+        "actor": 69,
+        "movie": 28
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 116,
+    "fields": {
+        "character_name": "Dr. Stephen Strange",
+        "actor": 35,
+        "movie": 29
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 117,
+    "fields": {
+        "character_name": "Mordo",
+        "actor": 36,
+        "movie": 29
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 118,
+    "fields": {
+        "character_name": "Dr. Christine Palmer",
+        "actor": 37,
+        "movie": 29
+    }
+}, {
+    "model": "mcu_site.characterplayed",
+    "pk": 119,
+    "fields": {
+        "character_name": "Wanda Maximoff / Scarlet",
+        "actor": 70,
+        "movie": 29
+    }
+}]
