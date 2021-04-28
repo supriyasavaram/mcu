@@ -7,7 +7,10 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, forms
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from django.db.models import Avg
 import datetime
+
+
 
 
 from .forms import CreateUserForm
@@ -20,11 +23,27 @@ def index(request):
 def home(request):
     return render(request, 'home.html')
 
+def format_stars(num):
+    whole = int(num)
+    lst = []
+    counter = 5
+    for i in range(whole):
+        lst.append("Whole")
+        num -= 1
+        counter -= 1
+    if .33 < num < .67:
+        lst.append("Half")
+        counter -= 1
+    for i in range(counter):
+        lst.append("None")
+    return lst
+    
 
 def movies(request):
     all_movies = Movie.objects.all()
     context = {
-        'movies': all_movies
+        'movies': all_movies,
+        'stars': format_stars(4.5)
     }
     return render(request, 'movies.html', context)
 

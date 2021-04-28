@@ -28,11 +28,16 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, through='CharacterPlayed', blank=True)
     directors = models.ManyToManyField(Director, blank=True)
 
-
-
     def add_movie(self, title):
         movie = self.create(title=title)
         return movie
+    
+    # may need to change idk lol
+    def average_rating(self):
+        ratings = Review.objects.filter(title=self).aggregate(
+            models.Avg('stars')
+        )
+        return ratings.get('stars__avg')
     
     def __str__(self):
         return self.title + " " + self.year

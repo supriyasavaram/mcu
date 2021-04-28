@@ -1,9 +1,50 @@
-  
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+  {% extends 'base.html' %}
+  {% load static %}
 
-{% if movies %}
+  {% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="{% static 'movies.css' %}">
+  {% endblock %}
+
+  {% block content %}
+
+  <h2>Movies</h2>
+
+  {% if movies %}
+  {% for movie in movies %}
+  <div class="movie-detail">
+      <div class="row">
+          <div class="title">{{ movie.title }} {{ movie.year }}</div>
+          <div class="stars">
+              {% for star in stars %}
+              {% if star == "Whole" %}
+              <i class="fas fa-star fa-xs"></i>
+              {% elif star == "Half" %}
+              <i class="fas fa-star-half-alt fa-xs"></i>
+              {% else %}
+              <i class="far fa-star fa-xs"></i>
+              {% endif %}
+              {% endfor %}
+          </div>
+      </div>
+      <div class="synopsis">
+          Synoposis: {{ movie.synopsis }}
+      </div>
+      <div class="runtime">
+          Runtime: {{ movie.runtime }}
+      </div>
+      <div class="actors">
+          Stars:
+          {{ movie.actors.all |join:", " }}
+      </div>
+      <div class="directors">
+          Director(s): {{ movie.directors.all |join:", " }}
+      </div>
+
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <!-- {% if movies %}
     <table>
             <th>Title</th>
             <th>Synopsis</th>
@@ -25,6 +66,6 @@
 
             {% endfor %}
 </table>
-{% endif %}
+{% endif %} -->
 
-{% endblock %}
+  {% endblock %}
