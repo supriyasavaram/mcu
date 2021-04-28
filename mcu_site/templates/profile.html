@@ -5,29 +5,6 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <b>About You</b></br>
-        <table>
-        <tr>
-            <td>Username &emsp;</td>
-            <td>{{ user.username }}</td>
-        </tr>
-        <tr>
-            <td>Name &emsp;</td>
-            <td>{{ user.first_name }} {{ user.last_name }}</td>
-        </tr>
-        <tr>
-            <td>Email &emsp;</td>
-            <td>{{ user.email }}</td>
-        </tr>
-        <tr>
-            <td>Member Since &emsp;</td>
-            <td>{{ user.date_joined }}</td>
-        </tr>
-        <!--<tr>
-            <td>Reviews Written &emsp;</td>
-            <td>{{ user.profile. }}</td>
-        </tr>!-->
-        </table>
         {% if reviews %}
             Here are your reviews
             <table>
@@ -44,7 +21,7 @@
                     <td>{{ review.author }}</td>
                 </tr>
                 {% endif %}
-
+                
 
             {% endfor %}
             </table>

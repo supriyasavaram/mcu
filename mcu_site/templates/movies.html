@@ -1,15 +1,71 @@
-  
-{% extends 'base.html' %}
-{% load static %}
-{% block content %}
+  {% extends 'base.html' %}
+  {% load static %}
 
-{% if movies %}
-    {% for movie in movies %}
-       
-        <h1>{{ movie.title }}</h1>
-        <p>{{ movie.synopsis }}</p>
+  {% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="{% static 'movies.css' %}">
+  {% endblock %}
 
-    {% endfor %}
-{% endif %}
+  {% block content %}
 
-{% endblock %}
+  <h2>Movies</h2>
+
+  {% if movies %}
+  {% for movie in movies %}
+  <div class="movie-detail">
+      <div class="row">
+          <div class="title">{{ movie.title }} {{ movie.year }}</div>
+          <div class="stars">
+              {% for star in stars %}
+              {% if star == "Whole" %}
+              <i class="fas fa-star fa-xs"></i>
+              {% elif star == "Half" %}
+              <i class="fas fa-star-half-alt fa-xs"></i>
+              {% else %}
+              <i class="far fa-star fa-xs"></i>
+              {% endif %}
+              {% endfor %}
+          </div>
+      </div>
+      <div class="synopsis">
+          Synoposis: {{ movie.synopsis }}
+      </div>
+      <div class="runtime">
+          Runtime: {{ movie.runtime }}
+      </div>
+      <div class="actors">
+          Stars:
+          {{ movie.actors.all |join:", " }}
+      </div>
+      <div class="directors">
+          Director(s): {{ movie.directors.all |join:", " }}
+      </div>
+
+  </div>
+  {% endfor %}
+  {% endif %}
+
+  <!-- {% if movies %}
+    <table>
+            <th>Title</th>
+            <th>Synopsis</th>
+            <th>Year Released</th>
+            <th>Runtime</th>
+            {% for movie in movies %}
+                
+                <tr>
+                    <td>{{ movie.title }}</td>
+                    <td>{{ movie.synopsis }}</td>
+                    <td>{{ movie.year }}</td>
+                    <td>{{ movie.runtime }}</td>
+                    <td><a href="reviews"><button name="movie_rev"  value={{movie.id}} class='btn round'>
+                        Check Reviews {{movie.id}}
+                    </button></a></td>
+                </tr>
+                
+                
+
+            {% endfor %}
+</table>
+{% endif %} -->
+
+  {% endblock %}
