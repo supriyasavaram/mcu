@@ -410,3 +410,11 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,macos,python,django,windows,sublimetext,pycharm
+
+db/directors.py
+db/person.py
+db/stars.py
+db/test.py
+mcu_site/fixtures/temp.json
+mcu_site/fixtures/hi.json
+db/movies.py

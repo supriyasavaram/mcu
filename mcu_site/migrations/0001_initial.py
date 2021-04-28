@@ -1,6 +1,5 @@
 
 import datetime
-
 from django.conf import settings
 from django.db import migrations, models
 import django.db.models.deletion
@@ -53,9 +52,7 @@ class Migration(migrations.Migration):
             name='Person',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=32)),
-                ('middle_name', models.CharField(blank=True, max_length=32, null=True)),
-                ('last_name', models.CharField(max_length=32)),
+                ('name', models.CharField(max_length=32)),
             ],
         ),
         migrations.CreateModel(
@@ -86,10 +83,10 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=150)),
                 ('synopsis', models.CharField(max_length=2048)),
-                ('date', models.DateField()),
-                ('runtime', models.DurationField(blank=True, default=datetime.timedelta(0), null=True)),
-                ('actors', models.ManyToManyField(through='mcu_site.CharacterPlayed', to='mcu_site.Actor')),
-                ('directors', models.ManyToManyField(to='mcu_site.Director')),
+                ('year', models.CharField(max_length=10)),
+                ('runtime', models.CharField(max_length=32)),
+                ('actors', models.ManyToManyField(blank=True, through='mcu_site.CharacterPlayed', to='mcu_site.Actor')),
+                ('directors', models.ManyToManyField(blank=True, to='mcu_site.Director')),
             ],
         ),
 
