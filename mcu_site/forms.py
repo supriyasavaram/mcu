@@ -1,3 +1,4 @@
+
 import datetime
 
 from django.contrib.auth.forms import UserCreationForm
@@ -6,6 +7,7 @@ from django import forms
 from .models import Review, Movie
 from django.contrib.auth.models import User
 
+
 class CreateUserForm(UserCreationForm):
     first_name = forms.CharField()
     last_name = forms.CharField()
@@ -13,6 +15,7 @@ class CreateUserForm(UserCreationForm):
 
     class Meta:
         model = User
+
         fields = ['first_name', 'last_name', 'username', 'email', 'password1', 'password2']
 
 
@@ -23,4 +26,3 @@ class CreateReviewForm(forms.ModelForm):
         author_id=title=forms.ModelChoiceField(User.objects.all())
         model = Review
         fields = ['title','stars','review_text','author']
-

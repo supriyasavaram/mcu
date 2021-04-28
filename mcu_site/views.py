@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from .models import Movie,Review
 from .forms import CreateReviewForm
@@ -7,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, form
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 import datetime
+
 
 from .forms import CreateUserForm
 
@@ -53,11 +55,13 @@ def submit_review(request):
     return render(request, 'submit_review.html',{"movies":results})
 
 def profile(request):
+
     all_reviews = Review.objects.all()
     context = {
         'reviews':all_reviews
     }
     return render(request, 'profile.html',context)
+
 
 def register(request):
     context = {'error': ''}
@@ -80,7 +84,9 @@ def signin(request):
     context = {}
     if request.user.is_authenticated:
         return redirect('index')
+
     if request.method == "POST" and "signin" in request.POST:
+
         username = request.POST['username']
         password = request.POST['password']
         user_auth = authenticate(request, username=username, password=password)
@@ -89,8 +95,10 @@ def signin(request):
             return render(request, 'index.html')
         else:
             context['error'] = "Invalid username/password. Please try again."
+
             # return render(request, 'events/signin.html', context)
     return render(request, 'signin.html', context)
+
 
 def signout(request):
     logout(request)

@@ -20,14 +20,16 @@ class Movie(models.Model):
     runtime = models.CharField(max_length=32)
     actors = models.ManyToManyField(Actor, through='CharacterPlayed', blank=True)
     directors = models.ManyToManyField(Director, blank=True)
-    
+
+
+
     def add_movie(self, title):
         movie = self.create(title=title)
         return movie
     
     def __str__(self):
         return self.title + " " + self.year
-        
+
 class CharacterPlayed(models.Model):
     character_name = models.CharField(max_length=32)
     actor = models.ForeignKey(Actor, on_delete=models.DO_NOTHING)
