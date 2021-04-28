@@ -21,6 +21,8 @@ class Movie(models.Model):
     actors = models.ManyToManyField(Actor, through='CharacterPlayed', blank=True)
     directors = models.ManyToManyField(Director, blank=True)
 
+
+
     def add_movie(self, title):
         movie = self.create(title=title)
         return movie
@@ -42,6 +44,7 @@ class CharacterPlayed(models.Model):
 #     alignment = models.CharField(max_length=150)
 
 class Review(models.Model):
+    title = models.ForeignKey(Movie, on_delete=models.DO_NOTHING)
     stars = models.IntegerField()
     date_written = models.DateTimeField(auto_now_add=True)
     review_text = models.TextField(max_length=2048)
