@@ -27,20 +27,30 @@ def movies(request):
     return render(request, 'movies.html', context)
 
 def reviews(request):
+    all_reviews = Review.objects.all()
+    context = {
+        'reviews':all_reviews
+    }
+    return render(request, 'reviews.html',context)
+
+def submit_review(request):
+    results=Movie.objects.all()
     context={'error':''}
-    if request.method == "POST" and "reviews" in request.POST:
+    if request.method == "POST":
+        
         form = CreateReviewForm(request.POST)
         if form.is_valid():
-            form.stars = form.cleaned_data.get('stars')
-            form.review_text = form.cleaned_data.get('review_text')
-            form.id=request.user.id
+            # form.title=form.cleaned_data.get('movie_title')
+            # form.stars = form.cleaned_data.get('stars')
+            # form.review_text = form.cleaned_data.get('review_text')
+            # form.id=request.user.id
             form.save()
-            # messages.success(request, "Account created!")
             
             context = {'error' : 'created review'}
         else:
+            
             context = {'form': form}
-    return render(request, 'reviews.html',context)
+    return render(request, 'submit_review.html',{"movies":results})
 
 def profile(request):
     all_reviews = Review.objects.all()

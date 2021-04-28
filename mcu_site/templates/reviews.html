@@ -4,30 +4,29 @@
 {% block title %}MCU Reviews - Reviews{% endblock %}
 
 {% block content %}
-    {% if user.is_authenticated %}
-        <form method="post">
-        {% csrf_token %}
-        <div class="form-group">
-            <label for="stars">Rating (1-5)</label>
-            <input type="text" name="stars" id="stars" class="form-input" placeholder="5">
-        </div>
-        <div class="form-group">
-            <label for="review_text">Review Test</label>
-            <input type="text" name="review_text" id="review_text" class="form-input" placeholder="Good Movie">
-        </div>
-        <div class="form-group">
-            <label for="author">Written By</label>
-            {{ user.username }}
-        </div>
 
-        <div class="form-group">
-            <button name="review" class='btn round'>
-                Post Review
-            </button>
-        </div>
-    </form>
-    {% else %}
-    You must log in before you post a review
-        
-    {% endif %}
+{% if reviews %}
+            
+            <table>
+                <th>Movie</th>
+                <th>Rating</th>
+                <th>Date Written</th>
+                <th>Review</th>
+                <th>Author</th>
+                {% for review in reviews %}
+                    <tr>
+                        <td>{{ review.title }}</td>
+                        <td>{{ review.stars }}</td>
+                        <td>{{ review.date_written }}</td>
+                        <td>{{ review.review_text }}</td>
+                        <td>{{ review.author }}</td>
+                    </tr>
+                    
+                    
+
+                {% endfor %}
+            </table>
+        {% endif %}
+
+
 {% endblock %}
