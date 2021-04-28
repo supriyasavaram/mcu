@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}MCU Reviews - {{ user.username }}'s Profile{% endblock %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <b>About You</b></br>
+        <table>
+        <tr>
+            <td>Username &emsp;</td>
+            <td>{{ user.username }}</td>
+        </tr>
+        <tr>
+            <td>Name &emsp;</td>
+            <td>{{ user.first_name }} {{ user.last_name }}</td>
+        </tr>
+        <tr>
+            <td>Email &emsp;</td>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <td>Member Since &emsp;</td>
+            <td>{{ user.date_joined }}</td>
+        </tr>
+        <!--<tr>
+            <td>Reviews Written &emsp;</td>
+            <td>{{ user.profile. }}</td>
+        </tr>!-->
+        </table>
+        {% if reviews %}
+            Here are your reviews
+            <table>
+            <th>Rating</th>
+            <th>Date Written</th>
+            <th>Review</th>
+            <th>Author</th>
+            {% for review in reviews %}
+                {% if review.author == user%}
+                <tr>
+                    <td>{{ review.stars }}</td>
+                    <td>{{ review.date_written }}</td>
+                    <td>{{ review.review_text }}</td>
+                    <td>{{ review.author }}</td>
+                </tr>
+                {% endif %}
+
+
+            {% endfor %}
+            </table>
+        {% endif %}
+    {% else %}
+        No one is logged in at the moment.
+    {% endif %}
+{% endblock %}
