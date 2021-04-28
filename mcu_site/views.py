@@ -1,6 +1,6 @@
 
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from .models import Movie,Review
+from .models import Movie, Review
 from .forms import CreateReviewForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -12,34 +12,36 @@ import datetime
 
 from .forms import CreateUserForm
 
+
 def index(request):
     return render(request, 'index.html')
+
 
 def home(request):
     return render(request, 'home.html')
 
-def about(request):
-    return render(request, 'about.html')
 
 def movies(request):
     all_movies = Movie.objects.all()
     context = {
-        'movies':all_movies
+        'movies': all_movies
     }
     return render(request, 'movies.html', context)
+
 
 def reviews(request):
     all_reviews = Review.objects.all()
     context = {
-        'reviews':all_reviews
+        'reviews': all_reviews
     }
-    return render(request, 'reviews.html',context)
+    return render(request, 'reviews.html', context)
+
 
 def submit_review(request):
-    results=Movie.objects.all()
-    context={'error':''}
+    results = Movie.objects.all()
+    context = {'error': ''}
     if request.method == "POST":
-        
+
         form = CreateReviewForm(request.POST)
         if form.is_valid():
             # form.title=form.cleaned_data.get('movie_title')
@@ -47,20 +49,21 @@ def submit_review(request):
             # form.review_text = form.cleaned_data.get('review_text')
             # form.id=request.user.id
             form.save()
-            
-            context = {'error' : 'created review'}
+
+            context = {'error': 'created review'}
         else:
-            
+
             context = {'form': form}
-    return render(request, 'submit_review.html',{"movies":results})
+    return render(request, 'submit_review.html', {"movies": results})
+
 
 def profile(request):
 
     all_reviews = Review.objects.all()
     context = {
-        'reviews':all_reviews
+        'reviews': all_reviews
     }
-    return render(request, 'profile.html',context)
+    return render(request, 'profile.html', context)
 
 
 def register(request):
@@ -75,10 +78,11 @@ def register(request):
             form.save()
             # messages.success(request, "Account created!")
             user = authenticate(request, username=username, password=password)
-            context = {'error' : 'created account'}
+            context = {'error': 'created account'}
         else:
             context = {'form': form}
     return render(request, 'register.html', context)
+
 
 def signin(request):
     context = {}
@@ -103,6 +107,7 @@ def signin(request):
 def signout(request):
     logout(request)
     return redirect('index')
+
 
 def reset_password(request):
     return render(request, 'reset_password.html')
