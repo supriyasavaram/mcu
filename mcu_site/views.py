@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from .models import Movie, Review
-from .forms import CreateReviewForm
+from .forms import CreateReviewForm, CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, forms
@@ -10,11 +10,6 @@ from django.utils.decorators import method_decorator
 from django.db.models import Avg
 from django.db import connection
 import datetime
-
-
-
-
-from .forms import CreateUserForm
 
 
 def index(request):
@@ -85,11 +80,18 @@ def submit_review(request, m_id=None):
 
         form = CreateReviewForm(request.POST)
         if form.is_valid():
-            # form.title=form.cleaned_data.get('movie_title')
-            # form.stars = form.cleaned_data.get('stars')
-            # form.review_text = form.cleaned_data.get('review_text')
-            # form.id=request.user.id
-            form.save()
+            #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE id=%s AND title_id=%s', [request.user.id, form.cleaned_data.get('title')])
+            review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s;', [request.user.id, form.data.get('title')])
+            if (len(review)>0):
+                # feels both roundabout AND sketchy, but it seems to work. Does an UPDATE instead of an INSERT if the review already exists.
+                with connection.cursor() as cursor:
+                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+            else:
+                # form.title=form.cleaned_data.get('movie_title')
+                # form.stars = form.cleaned_data.get('stars')
+                # form.review_text = form.cleaned_data.get('review_text')
+                # form.id=request.user.id
+                form.save()
 
             context = {'error': 'created review'}
         else:
@@ -101,8 +103,12 @@ def submit_review(request, m_id=None):
 def profile(request):
     #all_reviews = Review.objects.all()
     user_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT COUNT(id) FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+        reviews_count = cursor.fetchone()[0] #this can be done easily because of Django html builtins, but using SQL seems more appropriate
     context = {
-        'reviews': user_reviews
+        'reviews': user_reviews,
+        'reviews_count': reviews_count,
     }
     return render(request, 'profile.html', context)
 
@@ -152,3 +158,20 @@ def signout(request):
 
 def reset_password(request):
     return render(request, 'reset_password.html')
+
+def settings(request):
+    if request.method == "POST":
+
+        form = CreateReviewForm(request.POST)
+        if form.is_valid():
+            # form.title=form.cleaned_data.get('movie_title')
+            # form.stars = form.cleaned_data.get('stars')
+            # form.review_text = form.cleaned_data.get('review_text')
+            # form.id=request.user.id
+            form.save()
+
+            context = {'error': 'created review'}
+        else:
+
+            context = {'form': form}
+    return render(request, 'settings.html')
