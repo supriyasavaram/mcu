@@ -4,3 +4,4 @@ mysqlclient
 bs4
 requests
 gunicorn
+django-heroku
