@@ -8,21 +8,25 @@
         {% if movie %}
         <div class="row justify-content-center">
             <div class="text-center">
-                <h3>Reviews for "{{movie}}" {{year}}</h3>
+                <h3>Reviews for "{{ movie.title }}" {{ movie.year }}</h3>
             </div>
         </div>
         {% endif %}    
         {% if reviews %}
             
             <table>
-                <th>Movie</th>
+                {% if not movie %}
+                    <th>Movie</th>
+                {% endif %}
                 <th>Rating</th>
                 <th>Date Written</th>
                 <th>Review</th>
                 <th>Author</th>
                 {% for review in reviews %}
                     <tr>
-                        <td>{{ review.title }}</td>
+                        {% if not movie %}
+                            <td>{{ review.title }}</td>
+                        {% endif %}
                         <td>{{ review.stars }}</td>
                         <td>{{ review.date_written }}</td>
                         <td>{{ review.review_text }}</td>
@@ -30,8 +34,12 @@
                     </tr>
                 {% endfor %}
             </table>
-        {% else %}
+        {% elif movie %}
             <p>There are no reviews for this movie yet!</p>
+            <p><a href ="/submit-review/{{ movie.id }}">Write a Review</a></p>
+        {% else %}
+            <p>There are no reviews!</p>
+            <p><href="{% url 'submit_review' %}">Write a Review</a></p>
         {% endif %}
 
 

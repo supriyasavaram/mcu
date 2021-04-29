@@ -59,25 +59,28 @@ def reviews(request, m_id=None):
         }
     else:
         movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
-        with connection.cursor() as cursor:
-            #The below isn't really as ideal because it demands that id is selected, even though I don't need that at the moment
-            #movie_title = Movie.objects.raw('SELECT id, title FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id]) 
-            cursor.execute('SELECT title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])
-            movie = cursor.fetchone() #returns a tuple of the title, year
-            movie_title = movie[0]
-            movie_year = movie[1]
+        movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
+        #with connection.cursor() as cursor:
+        #    cursor.execute('SELECT title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])
+        #    movie = cursor.fetchone() #returns a tuple of the title, year
+        #    movie_title = movie[0]
+        #    movie_year = movie[1]
         context = {
             'reviews': movie_reviews,
-            'movie': movie_title,
-            'year': movie_year,
+            'movie': movie,
         }
     return render(request, 'reviews.html', context)
 
 
-def submit_review(request):
+def submit_review(request, m_id=None):
     #results = Movie.objects.all()
-    results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
-    context = {'error': ''}
+    movie = None
+    if m_id is not None:
+        movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
+        results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
+    else:
+        results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+    #context = {'error': ''}
     if request.method == "POST":
 
         form = CreateReviewForm(request.POST)
@@ -92,7 +95,7 @@ def submit_review(request):
         else:
 
             context = {'form': form}
-    return render(request, 'submit_review.html', {"movies": results})
+    return render(request, 'submit_review.html', {"movies": results, "movie":movie})
 
 
 def profile(request):
