@@ -8,6 +8,7 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, form
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import Avg
+from django.db import connection
 import datetime
 
 
@@ -40,7 +41,8 @@ def format_stars(num):
     
 
 def movies(request):
-    all_movies = Movie.objects.all()
+    #all_movies = Movie.objects.all()
+    all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
     context = {
         'movies': all_movies,
         'stars': format_stars(4.5)
@@ -48,17 +50,37 @@ def movies(request):
     return render(request, 'movies.html', context)
 
 
-def reviews(request):
-    all_reviews = Review.objects.all()
-    context = {
-        'reviews': all_reviews
-    }
+def reviews(request, m_id=None):
+    #all_reviews = Review.objects.all()
+    if m_id is None:
+        all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
+        context = {
+            'reviews': all_reviews
+        }
+    else:
+        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
+        movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
+        #with connection.cursor() as cursor:
+        #    cursor.execute('SELECT title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])
+        #    movie = cursor.fetchone() #returns a tuple of the title, year
+        #    movie_title = movie[0]
+        #    movie_year = movie[1]
+        context = {
+            'reviews': movie_reviews,
+            'movie': movie,
+        }
     return render(request, 'reviews.html', context)
 
 
-def submit_review(request):
-    results = Movie.objects.all()
-    context = {'error': ''}
+def submit_review(request, m_id=None):
+    #results = Movie.objects.all()
+    movie = None
+    if m_id is not None:
+        movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
+        results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
+    else:
+        results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+    #context = {'error': ''}
     if request.method == "POST":
 
         form = CreateReviewForm(request.POST)
@@ -73,14 +95,14 @@ def submit_review(request):
         else:
 
             context = {'form': form}
-    return render(request, 'submit_review.html', {"movies": results})
+    return render(request, 'submit_review.html', {"movies": results, "movie":movie})
 
 
 def profile(request):
-
-    all_reviews = Review.objects.all()
+    #all_reviews = Review.objects.all()
+    user_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
     context = {
-        'reviews': all_reviews
+        'reviews': user_reviews
     }
     return render(request, 'profile.html', context)
 
