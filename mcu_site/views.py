@@ -40,7 +40,8 @@ def format_stars(num):
     
 
 def movies(request):
-    all_movies = Movie.objects.all()
+    #all_movies = Movie.objects.all()
+    all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
     context = {
         'movies': all_movies,
         'stars': format_stars(4.5)
@@ -49,7 +50,8 @@ def movies(request):
 
 
 def reviews(request):
-    all_reviews = Review.objects.all()
+    #all_reviews = Review.objects.all()
+    all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
     context = {
         'reviews': all_reviews
     }
@@ -57,7 +59,8 @@ def reviews(request):
 
 
 def submit_review(request):
-    results = Movie.objects.all()
+    #results = Movie.objects.all()
+    results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
     context = {'error': ''}
     if request.method == "POST":
 
@@ -77,10 +80,10 @@ def submit_review(request):
 
 
 def profile(request):
-
-    all_reviews = Review.objects.all()
+    #all_reviews = Review.objects.all()
+    user_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
     context = {
-        'reviews': all_reviews
+        'reviews': user_reviews
     }
     return render(request, 'profile.html', context)
 
