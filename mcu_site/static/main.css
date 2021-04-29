@@ -7,6 +7,7 @@ html {
     --button-color: #E5383B;
     --star-color: #FDFFB6;
     --footer-color: #34383A;
+    --background-color-lighter: #293036;
 }
 
 /* html[data-theme='light'] {
@@ -82,4 +83,14 @@ button:hover {
 
 .round {
     border-radius: .5rem;
+}
+
+table{
+    border-collapse: collapse;
+}
+th, td{
+    text-align: left;
+}
+tr:nth-child(even) {
+    background-color: var(--background-color-lighter);
 }

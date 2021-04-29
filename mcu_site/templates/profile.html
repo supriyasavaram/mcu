@@ -5,7 +5,7 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        <b>About You</b></br>
+        <h3>About You</h3>
         <table>
         <tr>
             <td>Username &emsp;</td>
@@ -23,26 +23,29 @@
             <td>Member Since &emsp;</td>
             <td>{{ user.date_joined }}</td>
         </tr>
-        <!--<tr>
+        <tr>
             <td>Reviews Written &emsp;</td>
-            <td>{{ user.profile. }}</td>
-        </tr>!-->
+            <!--<td>{{ reviews | length }}</td>-->
+            <td>{{reviews_count}}</td>
+        </tr>
         </table>
         <br>
         {% if reviews %}
-            Here are your reviews
+            <h3>Here are your reviews</h3>
             <table>
-            <th>Rating</th>
-            <th>Date Written</th>
-            <th>Review</th>
-            <th>Author</th>
+            <th>Movie&ensp;</th>
+            <th>Rating&ensp;</th>
+            <th>Date Written&ensp;</th>
+            <th>Review&ensp;</th>
+            <!--<th>Author</th>-->
             {% for review in reviews %}
-                <!--{% if review.author == user%}!-->
+                <!--{% if review.author == user%}-->
                 <tr>
-                    <td>{{ review.stars }}</td>
-                    <td>{{ review.date_written }}</td>
-                    <td>{{ review.review_text }}</td>
-                    <td>{{ review.author }}</td>
+                    <td>{{ review.title }}&ensp;</td>
+                    <td>{{ review.stars }}&ensp;</td>
+                    <td>{{ review.date_written }}&ensp;</td>
+                    <td>{{ review.review_text }}&ensp;</td>
+                    <!--<td>{{ review.author }}</td>-->
                 </tr>
                 <!--{% endif %}!-->
                 

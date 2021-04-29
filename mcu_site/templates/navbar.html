@@ -47,7 +47,7 @@
             <div class='auth'>
                 {% if user.is_authenticated %}
                 <a class='nav-sublink-mobile' href="{% url 'profile' %}">PROFILE</a>
-                <a class='nav-sublink-mobile' href="">SETTINGS</a>
+                <a class='nav-sublink-mobile' href="{% url 'settings' %}">SETTINGS</a>
                 <a class='nav-sublink-mobile' href="{% url 'signout' %}">LOG OUT</a>
                 {% else %}
                 <a href="{% url 'signin' %}">LOGIN</a>

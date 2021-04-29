@@ -16,21 +16,21 @@
             
             <table>
                 {% if not movie %}
-                    <th>Movie</th>
+                    <th>Movie&ensp;</th>
                 {% endif %}
-                <th>Rating</th>
-                <th>Date Written</th>
-                <th>Review</th>
-                <th>Author</th>
+                <th>Rating&ensp;</th>
+                <th>Date Written&ensp;</th>
+                <th>Review&ensp;</th>
+                <th>Author&ensp;</th>
                 {% for review in reviews %}
                     <tr>
                         {% if not movie %}
-                            <td>{{ review.title }}</td>
+                            <td>{{ review.title }}&ensp;</td>
                         {% endif %}
-                        <td>{{ review.stars }}</td>
-                        <td>{{ review.date_written }}</td>
-                        <td>{{ review.review_text }}</td>
-                        <td>{{ review.author }}</td>
+                        <td>{{ review.stars }}&ensp;</td>
+                        <td>{{ review.date_written }}&ensp;</td>
+                        <td>{{ review.review_text }}&ensp;</td>
+                        <td>{{ review.author }}&ensp;</td>
                     </tr>
                 {% endfor %}
             </table>
