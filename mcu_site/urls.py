@@ -13,5 +13,5 @@ urlpatterns = [
     path('logout', views.signout, name='signout'),
     path('reset-password', views.reset_password, name='reset-password'),
 
-    path('reviews/<int:id>', views.reviews, name='reviews'),
+    path('reviews/<int:m_id>', views.reviews, name='reviews'),
 ]

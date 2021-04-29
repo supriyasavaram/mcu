@@ -5,8 +5,14 @@
 
 {% block content %}
 
-
-{% if reviews %}
+        {% if movie %}
+        <div class="row justify-content-center">
+            <div class="text-center">
+                <h3>Reviews for "{{movie}}" {{year}}</h3>
+            </div>
+        </div>
+        {% endif %}    
+        {% if reviews %}
             
             <table>
                 <th>Movie</th>
@@ -22,13 +28,11 @@
                         <td>{{ review.review_text }}</td>
                         <td>{{ review.author }}</td>
                     </tr>
-                    
-                    
-
                 {% endfor %}
             </table>
+        {% else %}
+            <p>There are no reviews for this movie yet!</p>
         {% endif %}
-
 
 
 {% endblock %}
