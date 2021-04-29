@@ -13,12 +13,16 @@
         <div class="form-group">
             <label for="title">Pick a movie</label>
             <select name="title" id="title">
-            <option disabled="true" selected>--Select Movie--</option>
-            {% for results in movies%}
-            <option value={{results.id}}>{{results}}
-            {% comment %} <input type="hidden" name="title" id="title" class="form-input" value="{{results.id}}"> {% endcomment %}
-            </options>
-            {%endfor%}
+                {% if movie %}
+                    <option value={{movie.id}} selected>{{movie}}
+                {% else %}
+                    <option disabled="true" selected>--Select Movie--</option>
+                {% endif %}
+                {% for results in movies%}
+                <option value={{results.id}}>{{results}}
+                {% comment %} <input type="hidden" name="title" id="title" class="form-input" value="{{results.id}}"> {% endcomment %}
+                </options>
+                {%endfor%}
             </select>
         </div>
 

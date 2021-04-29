@@ -39,6 +39,13 @@
       <div class="directors">
           Director(s): {{ movie.directors.all |join:", " }}
       </div>
+      <p>
+        <a href ="/reviews/{{ movie.id }}">See Reviews</a>
+        <br>
+        <a href ="/submit-review/{{ movie.id }}">Write Review</a>
+      </p>
+      <button>
+      
 
   </div>
   {% endfor %}

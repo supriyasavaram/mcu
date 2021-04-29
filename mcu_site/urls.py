@@ -12,4 +12,7 @@ urlpatterns = [
     path('login', views.signin, name='signin'),
     path('logout', views.signout, name='signout'),
     path('reset-password', views.reset_password, name='reset-password'),
+
+    path('reviews/<int:m_id>', views.reviews, name='reviews'),
+    path('submit-review/<int:m_id>', views.submit_review, name='submit_review'),
 ]
