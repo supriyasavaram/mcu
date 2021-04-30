@@ -14,12 +14,12 @@
             <label for="title">Pick a movie</label>
             <select name="title" id="title">
                 {% if movie %}
-                    <option value={{movie.id}} selected>{{movie}}
+                    <option value={{movie.id}} selected>{{movie.title}} {{movie.year}}
                 {% else %}
                     <option disabled="true" selected>--Select Movie--</option>
                 {% endif %}
                 {% for results in movies%}
-                <option value={{results.id}}>{{results}}
+                <option value={{results.id}}>{{results.title}} {{results.year}}
                 {% comment %} <input type="hidden" name="title" id="title" class="form-input" value="{{results.id}}"> {% endcomment %}
                 </options>
                 {%endfor%}
