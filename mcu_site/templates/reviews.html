@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load static %}
 
+ {% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="{% static 'reviews.css' %}">
+  {% endblock %}
+
 {% block title %}MCU Reviews - Reviews{% endblock %}
 
 {% block content %}
@@ -12,18 +16,51 @@
             </div>
         </div>
         {% endif %}    
-        {% if reviews %}
+        {% if curr_reviews %}
             
-            <table>
+            {% comment %} <table>
                 {% if not movie %}
                     <th>Movie&ensp;</th>
                 {% endif %}
                 <th>Rating&ensp;</th>
                 <th>Date Written&ensp;</th>
                 <th>Review&ensp;</th>
-                <th>Author&ensp;</th>
-                {% for review in reviews %}
-                    <tr>
+                <th>Author&ensp;</th> {% endcomment %}
+                {% for review,star in reviews %}
+                    <div class="review-detail">
+                        <div class="row">
+                        
+                            <div class="title">{{ review.title }}</div>
+                             <div class="stars">
+
+                                        {% for star_list in star %}
+                                        {% if star_list == "Whole" %}
+                                        <i class="fas fa-star fa-xs"></i>
+                                        {% elif star_list == "Half" %}
+                                        <i class="fas fa-star-half-alt fa-xs"></i>
+                                        {% else %}
+                                        <i class="far fa-star fa-xs"></i>
+                                        {% endif %}
+                                        {% endfor %} 
+                                    
+                            </div> 
+                        </div>
+                        <div class="review">
+                            Review: {{ review.review_text }}
+                        </div>
+                        
+                        <div class="author">
+                            Written By: {{ review.author }}
+                        </div>
+                        <div class="date">
+                            Date: {{ review.date_written }}
+                        </div>
+                        
+
+                    </div>
+
+            
+                    {% comment %} <tr>
                         {% if not movie %}
                             <td>{{ review.title }}&ensp;</td>
                         {% endif %}
@@ -31,9 +68,9 @@
                         <td>{{ review.date_written }}&ensp;</td>
                         <td>{{ review.review_text }}&ensp;</td>
                         <td>{{ review.author }}&ensp;</td>
-                    </tr>
+                    </tr> {% endcomment %}
                 {% endfor %}
-            </table>
+            {% comment %} </table> {% endcomment %}
         {% elif movie %}
             <p>There are no reviews for this movie yet!</p>
             <p><a href ="/submit-review/{{ movie.id }}">Write a Review</a></p>
