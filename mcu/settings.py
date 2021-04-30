@@ -140,3 +140,4 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'events/static/media')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
