@@ -13,17 +13,22 @@
   {% for movie in movies %}
   <div class="movie-detail">
       <div class="row">
-          <div class="title">{{ movie.title }} {{ movie.year }}</div>
+      
+          <div class="title">{{ movie.title }} {{forloop.counter}}</div>
           <div class="stars">
-              {% for star in stars %}
-              {% if star == "Whole" %}
-              <i class="fas fa-star fa-xs"></i>
-              {% elif star == "Half" %}
-              <i class="fas fa-star-half-alt fa-xs"></i>
-              {% else %}
-              <i class="far fa-star fa-xs"></i>
-              {% endif %}
-              {% endfor %}
+
+                
+                
+                    {% for star in stars %}
+                    {% if star == "Whole" %}
+                    <i class="fas fa-star fa-xs"></i>
+                    {% elif star == "Half" %}
+                    <i class="fas fa-star-half-alt fa-xs"></i>
+                    {% else %}
+                    <i class="far fa-star fa-xs"></i>
+                    {% endif %}
+                    {% endfor %}
+                
           </div>
       </div>
       <div class="synopsis">
