@@ -3,22 +3,23 @@ from django.contrib.auth.models import User
 import datetime
 
 class Person(models.Model):
-    name = models.CharField(max_length=32)
+    first_name = models.CharField(max_length=32)
+    last_name = models.CharField(max_length=32)
 
     def __str__(self):
-        return self.name
+        return self.first_name+" "+self.last_name
 
 class Actor(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.person.name
+        return self.person.first_name+" "+self.person.last_name
 
 class Director(models.Model):
     person = models.ForeignKey(Person, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.person.name
+        return self.person.first_name+" "+self.person.last_name
 
 class Movie(models.Model):
     title = models.CharField(max_length=150)
@@ -48,7 +49,7 @@ class CharacterPlayed(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.DO_NOTHING)
 
     def __str__(self):
-        return self.actor.person.name + ' as ' + self.character_name + ' in ' + self.movie.title + ' ' + self.movie.year
+        return self.actor.person.first_name +' '+self.actor.person.last_name+ ' as ' + self.character_name + ' in ' + self.movie.title + ' ' + self.movie.year
 
 
 # class Superhero(models.Model):
