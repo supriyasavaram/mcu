@@ -1,6 +1,7 @@
 
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from .models import Movie, Review
+#from .models import Movie, Review
+from .models import Review
 from .forms import CreateReviewForm, CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -35,7 +36,7 @@ def format_stars(num):
     return lst
 
 #added to work on fixing stars
-all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+#all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
 
 def stars_reviews(revs):
     star_list=[]
@@ -44,13 +45,13 @@ def stars_reviews(revs):
     return star_list
 
 def calculate_stars(mvs):
-    all_reviews = Movie.objects.raw('SELECT * FROM mcu_site_review')
+    all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
     star_list=[]
     temp=0
     counter=0
     for movi in mvs:
         for rev in all_reviews:
-            if movi.id==rev.title_id:
+            if movi['id']==rev.title_id:
                 temp+=rev.stars
                 counter+=1
         if counter!=0:
@@ -64,7 +65,11 @@ def calculate_stars(mvs):
 
 def movies(request):
     #all_movies = Movie.objects.all()
-    all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+    #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM mcu_site_movie')
+        columns = cursor.description
+        all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
     zipstuff=zip(all_movies,calculate_stars(all_movies))
     
     context = {
@@ -84,12 +89,12 @@ def reviews(request, m_id=None):
         }
     else:
         movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
-        movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
-        #with connection.cursor() as cursor:
-        #    cursor.execute('SELECT title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])
-        #    movie = cursor.fetchone() #returns a tuple of the title, year
-        #    movie_title = movie[0]
-        #    movie_year = movie[1]
+        #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])
+            columns = cursor.description
+            movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            movie = movie[0]
         zipstuff=zip(movie_reviews,stars_reviews(movie_reviews))
         context = {
             'curr_reviews':movie_reviews,
@@ -103,10 +108,23 @@ def submit_review(request, m_id=None):
     #results = Movie.objects.all()
     movie = None
     if m_id is not None:
-        movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
-        results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
+        #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
+        #results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])
+            columns = cursor.description
+            movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            movie = movie[0]
+
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
+            columns = cursor.description
+            results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
     else:
-        results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+        #results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM mcu_site_movie')
+            columns = cursor.description
+            results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
     #context = {'error': ''}
     if request.method == "POST":
 
