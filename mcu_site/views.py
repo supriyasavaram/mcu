@@ -37,19 +37,39 @@ def format_stars(num):
 #added to work on fixing stars
 all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
 
-def calculate_stars(mvs):
+def stars_reviews(revs):
     star_list=[]
+    for rev in revs:
+        star_list.append(format_stars(rev.stars))
+    return star_list
+
+def calculate_stars(mvs):
+    all_reviews = Movie.objects.raw('SELECT * FROM mcu_site_review')
+    star_list=[]
+    temp=0
+    counter=0
     for movi in mvs:
-        star_list.append(format_stars(4.0))
+        for rev in all_reviews:
+            if movi.id==rev.title_id:
+                temp+=rev.stars
+                counter+=1
+        if counter!=0:
+            star_list.append(format_stars(temp/counter))
+        else:
+            star_list.append(format_stars(0))
+        temp=0
+        counter=0
     return star_list 
     #all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
 
 def movies(request):
     #all_movies = Movie.objects.all()
     all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+    zipstuff=zip(all_movies,calculate_stars(all_movies))
+    
     context = {
-        'movies': all_movies,
-        'stars': format_stars(4.5) #calculate_stars(all_movies) 
+        'movies': zipstuff,
+        #'stars': calculate_stars(all_movies) #format_stars(4.5)
     }
     return render(request, 'movies.html', context)
 
@@ -58,8 +78,9 @@ def reviews(request, m_id=None):
     #all_reviews = Review.objects.all()
     if m_id is None:
         all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
+        zipstuff=zip(all_reviews,stars_reviews(all_reviews))
         context = {
-            'reviews': all_reviews
+            'reviews': zipstuff
         }
     else:
         movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
@@ -69,8 +90,10 @@ def reviews(request, m_id=None):
         #    movie = cursor.fetchone() #returns a tuple of the title, year
         #    movie_title = movie[0]
         #    movie_year = movie[1]
+        zipstuff=zip(movie_reviews,stars_reviews(movie_reviews))
         context = {
-            'reviews': movie_reviews,
+            'curr_reviews':movie_reviews,
+            'reviews': zipstuff,
             'movie': movie,
         }
     return render(request, 'reviews.html', context)

@@ -5,29 +5,30 @@
   <link rel="stylesheet" type="text/css" href="{% static 'movies.css' %}">
   {% endblock %}
 
+{% block title %}MCU Reviews - Movies{% endblock %}
   {% block content %}
 
   <h2>Movies</h2>
 
   {% if movies %}
-  {% for movie in movies %}
+  {% for movie,star in movies %}
   <div class="movie-detail">
       <div class="row">
       
-          <div class="title">{{ movie.title }} {{forloop.counter}}</div>
+          <div class="title">{{ movie.title }} {{movie.year}}</div>
           <div class="stars">
 
                 
                 
-                    {% for star in stars %}
-                    {% if star == "Whole" %}
+                     {% for star_list in star %}
+                    {% if star_list == "Whole" %}
                     <i class="fas fa-star fa-xs"></i>
-                    {% elif star == "Half" %}
+                    {% elif star_list == "Half" %}
                     <i class="fas fa-star-half-alt fa-xs"></i>
                     {% else %}
                     <i class="far fa-star fa-xs"></i>
                     {% endif %}
-                    {% endfor %}
+                    {% endfor %} 
                 
           </div>
       </div>

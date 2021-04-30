@@ -1,0 +1,47 @@
+html {
+    --background-color: #161A1D;
+    --text-color: white;
+    --text-color-highlight: #F17476;
+    --text-color-highlight-hover: #e76062;
+    --text-color-muted: #D8D8D8;
+    --button-color: #E5383B;
+    --star-color: #FDFFB6;
+    --footer-color: #34383A;
+}
+
+.review-detail {
+    border-radius: .25rem;
+    border: 1px solid var(--button-color);
+    overflow: hidden; 
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.title {
+    font-size: large;
+    font-weight: bold;
+    margin-right: .5rem;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
+
+.review{
+    font-size: medium;
+    font-weight: bold;
+    color: var(--text-color-muted);
+    margin: .25rem 0 ;
+}
+
+.author, .date{
+    font-size: small;
+    color: var(--text-color-muted);
+    margin: .25rem 0 ;
+}
+
+.stars i, .stars svg {
+    color: var(--star-color);
+}
