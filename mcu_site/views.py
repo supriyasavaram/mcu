@@ -178,7 +178,7 @@ def submit_review(request, m_title=None):
             if (len(review)>0):
                 # feels both roundabout AND sketchy, but it seems to work. Does an UPDATE instead of an INSERT if the review already exists.
                 with connection.cursor() as cursor:
-                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s, WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
             else:
                 # form.title=form.cleaned_data.get('movie_title')
                 # form.stars = form.cleaned_data.get('stars')
