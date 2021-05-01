@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import Avg
 from django.db import connection
-import datetime
+from datetime import datetime
 
 
 def index(request):
@@ -51,7 +51,7 @@ def calculate_stars(mvs):
     counter=0
     for movi in mvs:
         for rev in all_reviews:
-            if movi['id']==rev.title_id:
+            if movi['title']==rev.title_id:
                 temp+=rev.stars
                 counter+=1
         if counter!=0:
@@ -75,7 +75,7 @@ def movies(request):
         rows = cursor.description
         all_people= [{rows[index][0]:row for index, row in enumerate(value)} for value in cursor.fetchall()]
     zipstuff=zip(all_movies,calculate_stars(all_movies))
-    print(all_people)
+    #print(all_people)
     context = {
         'movies': zipstuff,
         #'stars': calculate_stars(all_movies) #format_stars(4.5)
@@ -103,9 +103,9 @@ def search(request):
             }
     return render(request, 'movies.html', context)
 
-def reviews(request, m_id=None):
+def reviews(request, m_title=None):
     #all_reviews = Review.objects.all()
-    if m_id is None:
+    if m_title is None:
         movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
         
@@ -120,10 +120,12 @@ def reviews(request, m_id=None):
         #    'reviews': zipstuff
         #}
     else:
-        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
+        movie_reviews = Review.objects.raw("SELECT * FROM mcu_site_review WHERE title='%s'", [m_title])
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
         with connection.cursor() as cursor:
-            cursor.execute('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])
+            m_title = "'"+m_title+"'"
+            print(m_title)
+            cursor.execute("SELECT title, year FROM mcu_site_movie WHERE title=%s LIMIT 1", [m_title])
             columns = cursor.description
             movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             movie = movie[0]
@@ -167,13 +169,17 @@ def submit_review(request, m_id=None):
             if (len(review)>0):
                 # feels both roundabout AND sketchy, but it seems to work. Does an UPDATE instead of an INSERT if the review already exists.
                 with connection.cursor() as cursor:
-                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
             else:
                 # form.title=form.cleaned_data.get('movie_title')
                 # form.stars = form.cleaned_data.get('stars')
                 # form.review_text = form.cleaned_data.get('review_text')
                 # form.id=request.user.id
                 form.save()
+                #with connection.cursor() as cursor:
+                #    cursor.execute("INSERT INTO mcu_site_review (id,stars,date_written,review_text,author_id,title_id) VALUES (%s,%s,'%s','%s',%s,'%s')", [5, form.cleaned_data.get('stars'), datetime.now(), form.cleaned_data('review_text'), request.user.id, form.data.get('title')] )
+                    #cursor.execute('INSERT mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+                
 
             context = {'error': 'created review'}
         else:

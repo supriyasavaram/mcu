@@ -14,7 +14,7 @@ urlpatterns = [
     path('reset-password', views.reset_password, name='reset-password'),
     path('settings', views.settings, name='settings'),
 
-    path('reviews/<int:m_id>', views.reviews, name='reviews'),
+    path('reviews/<str:m_title>', views.reviews, name='reviews'),
     path('submit-review/<int:m_id>', views.submit_review, name='submit_review'),
     path('search', views.search, name='search_movies'),
 ]

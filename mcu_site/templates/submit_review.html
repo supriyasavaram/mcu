@@ -14,14 +14,14 @@
             <label for="title">Pick a movie</label>
             <select name="title" id="title">
                 {% if movie %}
-                    <option value={{movie.title}} selected>{{movie.title}} {{movie.year}}
+                    <option value="{{movie.title}}" selected>{{movie.title}} {{movie.year}}</option>
                 {% else %}
                     <option disabled="true" selected>--Select Movie--</option>
                 {% endif %}
                 {% for results in movies%}
-                <option value={{results.title}}>{{results.title}} {{results.year}}
+                <option value="{{results.title}}">{{results.title}} {{results.year}}
                 {% comment %} <input type="hidden" name="title" id="title" class="form-input" value="{{results.id}}"> {% endcomment %}
-                </options>
+                </option>
                 {%endfor%}
             </select>
         </div>
