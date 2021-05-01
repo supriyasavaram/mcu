@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from .models import Movie, Review
-from .models import Review
+from .models import Movie, Review, Person
+#from .models import Review
 from .forms import CreateReviewForm, CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -335,3 +335,37 @@ def export_csv(request):
         writer.writerow(blank_list)
         blank_list=[]
     return response
+
+def people(request):
+    all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person')
+    directors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_director)')
+    actors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_actor)')
+    context = {
+        'everybody': all_actorsdirectors,
+        'directors': directors,
+        'actors': actors,
+        # 'reviews_count': reviews_count,
+    }
+    return render(request, 'people.html', context)
+
+
+    if request.method == "POST":
+        title = request.POST.get('delete_review', None)
+        with connection.cursor() as cursor:
+            cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [request.user.id, title])
+    #all_reviews = Review.objects.all()
+    user_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT COUNT(id) FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+        reviews_count = cursor.fetchone()[0] #this can be done easily because of Django html builtins, but using SQL seems more appropriate
+    #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+    #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
+        
+    zipstuff=zip(user_reviews,stars_reviews(user_reviews))
+    context = {
+        'reviews': zipstuff
+        # 'reviews_count': reviews_count,
+        
+    }
+    return render(request, 'profile.html', context)
+

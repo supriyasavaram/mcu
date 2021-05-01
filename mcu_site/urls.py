@@ -18,4 +18,5 @@ urlpatterns = [
     path('submit-review/<str:m_title>', views.submit_review, name='submit_review'),
     path('search', views.search, name='search_movies'),
     path('export_csv', views.export_csv, name='export-csv'),
+    path('people', views.people, name='people'),
 ]
