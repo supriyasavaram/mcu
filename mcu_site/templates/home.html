@@ -4,14 +4,7 @@
 {% block title %}MCU Reviews - Home{% endblock %}
 
 {% block content %}
-    <form method="POST" action="{% url 'export-csv' %}">
     
-            {%csrf_token%}
-            <div class='sql'>
-            <input type="hidden" placeholder="movies" name="sql" value="movie">
-            <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Export CSV</i></button>
-            </div>
-    </form>
     
             {% comment %} <a name="sql",id="sql" href= "{% url 'export-csv' %}" class="btn btn-secondary" value="movie">Export CSV</a> {% endcomment %}
     
