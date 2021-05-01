@@ -23,6 +23,6 @@ class CreateUserForm(UserCreationForm):
 class CreateReviewForm(forms.ModelForm):
     class Meta:
         title=forms.ModelChoiceField(Movie.objects.all())
-        author_id=title=forms.ModelChoiceField(User.objects.all())
+        author_id=forms.ModelChoiceField(User.objects.all())
         model = Review
         fields = ['title','stars','review_text','author']
