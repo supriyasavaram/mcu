@@ -59,10 +59,10 @@
                             Written By: {{ review.author }}
                         </div>
                         <div class="date">
-                            Date: {{ review.date_written }}
+                            Date Created: {{ review.date_written }}
                         </div>
 
-                        {% if user.username in review.author.username %} <!--review creator is user-->
+                        {% if user.is_authenticated and user.username in review.author.username %} <!--review creator is user-->
                             <div class="date">
 
                                 <a href="/submit-review/{{ review.title.title }}">Update</a>
