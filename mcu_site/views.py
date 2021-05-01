@@ -1,6 +1,6 @@
 
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-#from .models import Movie, Review
+from .models import Movie, Review
 from .models import Review
 from .forms import CreateReviewForm, CreateUserForm
 from django.contrib.auth import authenticate, login, logout
@@ -55,7 +55,10 @@ def calculate_stars(mvs):
     counter=0
     for movi in mvs:
         for rev in all_reviews:
-            if movi['title']==rev.title_id:
+            print(movi)
+            print('hello')
+            print(rev.title)
+            if movi.title==rev.title.title:
                 temp+=rev.stars
                 counter+=1
         if counter!=0:
@@ -69,15 +72,15 @@ def calculate_stars(mvs):
 
 def movies(request):
     #all_movies = Movie.objects.all()
-    #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
-    with connection.cursor() as cursor:
-        cursor.execute('SELECT * FROM mcu_site_movie')
-        columns = cursor.description
-        all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
-    with connection.cursor() as cursor:
-        cursor.execute('SELECT * FROM mcu_site_characterplayed')
-        rows = cursor.description
-        all_people= [{rows[index][0]:row for index, row in enumerate(value)} for value in cursor.fetchall()]
+    all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+    # with connection.cursor() as cursor:
+    #     cursor.execute('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+    #     columns = cursor.description
+    #     all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+    # with connection.cursor() as cursor:
+    #     cursor.execute('SELECT * FROM mcu_site_characterplayed')
+    #     rows = cursor.description
+    #     all_people= [{rows[index][0]:row for index, row in enumerate(value)} for value in cursor.fetchall()]
     zipstuff=zip(all_movies,calculate_stars(all_movies))
     context = {
         'movies': zipstuff,
