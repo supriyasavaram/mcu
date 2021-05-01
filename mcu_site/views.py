@@ -55,9 +55,9 @@ def calculate_stars(mvs):
     counter=0
     for movi in mvs:
         for rev in all_reviews:
-            print(movi)
-            print('hello')
-            print(rev.title)
+            #print(movi)
+            #print('hello')
+            #print(rev.title.title)
             if movi.title==rev.title.title:
                 temp+=rev.stars
                 counter+=1
@@ -95,11 +95,13 @@ def search(request):
         'search': searchquery
     }
     if(searchquery is not None and len(searchquery)>0):
-        with connection.cursor() as cursor:
-            s='%'+searchquery+'%'
-            cursor.execute("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s]) # lol sql injection here? yike
-            columns = cursor.description
-            all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        s='%'+searchquery+'%'
+        all_movies = Movie.objects.raw("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s])
+        #with connection.cursor() as cursor:
+        #    s='%'+searchquery+'%'
+        #    cursor.execute("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s]) # lol sql injection here? yike
+        #    columns = cursor.description
+        #    all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
         if(len(all_movies)>0):
             zipstuff=zip(all_movies,calculate_stars(all_movies))
             print(zipstuff)
