@@ -71,8 +71,22 @@ def calculate_stars(mvs):
     #all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
 
 def movies(request):
+    sortby = None
+    if request.method == "POST":
+        sortby = request.POST.get('sortby')
+    if(sortby is not None):
+        print(sortby)
+        if(sortby == "yeardesc"):
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year DESC')
+        elif(sortby == "sortaz"):
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title ASC')
+        elif(sortby == "sortza"):
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title DESC')
+        else: 
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+    else: 
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
     #all_movies = Movie.objects.all()
-    all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
     # with connection.cursor() as cursor:
     #     cursor.execute('SELECT * FROM mcu_site_movie ORDER BY year ASC')
     #     columns = cursor.description
