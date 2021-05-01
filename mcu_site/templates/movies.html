@@ -11,50 +11,56 @@
   <h2>Movies</h2>
 
   {% if movies %}
-  {% for movie,star in movies %}
-  <div class="movie-detail">
-      <div class="row">
-      
-          <div class="title">{{ movie.title }} {{movie.year}}</div>
-          <div class="stars">
+    {% for movie,star in movies %}
+    <div class="movie-detail">
+        <div class="row">
+        
+            <div class="title">{{ movie.title }} {{movie.year}}</div>
+            <div class="stars">
 
-                
-                
-                     {% for star_list in star %}
-                    {% if star_list == "Whole" %}
-                    <i class="fas fa-star fa-xs"></i>
-                    {% elif star_list == "Half" %}
-                    <i class="fas fa-star-half-alt fa-xs"></i>
-                    {% else %}
-                    <i class="far fa-star fa-xs"></i>
-                    {% endif %}
-                    {% endfor %} 
-                
-          </div>
-      </div>
-      <div class="synopsis">
-          Synoposis: {{ movie.synopsis }}
-      </div>
-      <div class="runtime">
-          Runtime: {{ movie.runtime }}
-      </div>
-      <div class="actors">
-          Stars:
-          {{ movie.actors.all |join:", " }}
-      </div>
-      <div class="directors">
-          Director(s): {{ movie.directors.all |join:", " }}
-      </div>
-      <p>
-        <a href ="/reviews/{{ movie.id }}">See Reviews</a>
-        <br>
-        <a href ="/submit-review/{{ movie.id }}">Write Review</a>
-      </p>
-      <button>
-      
+                    
+                    
+                        {% for star_list in star %}
+                        {% if star_list == "Whole" %}
+                        <i class="fas fa-star fa-xs"></i>
+                        {% elif star_list == "Half" %}
+                        <i class="fas fa-star-half-alt fa-xs"></i>
+                        {% else %}
+                        <i class="far fa-star fa-xs"></i>
+                        {% endif %}
+                        {% endfor %} 
+                    
+            </div>
+        </div>
+        <div class="synopsis">
+            Synoposis: {{ movie.synopsis }}
+        </div>
+        <div class="runtime">
+            Runtime: {{ movie.runtime }}
+        </div>
+        <div class="actors">
+            Stars:
+            {{ movie.actors.all |join:", " }}
+        </div>
+        <div class="directors">
+            Director(s): {{ movie.directors.all |join:", " }}
+        </div>
+        <p>
+            <a href ="/reviews/{{ movie.id }}">See Reviews</a>
+            <br>
+            <a href ="/submit-review/{{ movie.id }}">Write Review</a>
+        </p>
+        <button>
+        
 
-  </div>
-  {% endfor %}
+    </div>
+    {% endfor %}
+  {% else %}
+      {% if search %}
+        Sorry, your search "{{search}}" did not return any movies.
+      {% else %}
+        Please input something into the search bar to look for movies.
+      {% endif %}
   {% endif %}
 
   <!-- {% if movies %}

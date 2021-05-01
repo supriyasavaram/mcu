@@ -82,15 +82,43 @@ def movies(request):
     }
     return render(request, 'movies.html', context)
 
+def search(request):
+    if request.method == "POST":
+        searchquery = request.POST.get('searchquery', None)
+    context = {
+        'search': searchquery
+    }
+    if(searchquery is not None and len(searchquery)>0):
+        with connection.cursor() as cursor:
+            s='%'+searchquery+'%'
+            cursor.execute("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s]) # lol sql injection here? yike
+            columns = cursor.description
+            all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        if(len(all_movies)>0):
+            zipstuff=zip(all_movies,calculate_stars(all_movies))
+            print(zipstuff)
+            context = {
+                'movies': zipstuff,
+                'search': searchquery,
+            }
+    return render(request, 'movies.html', context)
 
 def reviews(request, m_id=None):
     #all_reviews = Review.objects.all()
     if m_id is None:
-        all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
-        zipstuff=zip(all_reviews,stars_reviews(all_reviews))
+        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+        #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
+        
+        zipstuff=zip(movie_reviews,stars_reviews(movie_reviews))
         context = {
-            'reviews': zipstuff
+            'curr_reviews':movie_reviews,
+            'reviews': zipstuff,
         }
+        #all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
+        #zipstuff=zip(all_reviews,stars_reviews(all_reviews))
+        #context = {
+        #    'reviews': zipstuff
+        #}
     else:
         movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
