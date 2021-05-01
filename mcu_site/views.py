@@ -332,17 +332,40 @@ def export_csv(request):
         blank_list=[]
     return response
 
-def people(request):
-    all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person')
-    directors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_director)')
-    actors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_actor)')
-    context = {
-        'everybody': all_actorsdirectors,
-        'directors': directors,
-        'actors': actors,
-        # 'reviews_count': reviews_count,
-    }
-    return render(request, 'people.html', context)
+def people(request, p_id=None):
+    if(p_id is not None):
+        context = dict()
+        p = Person.objects.raw('SELECT * FROM mcu_site_person')[0]
+        context['person'] = p
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT movie_title FROM mcu_site_directs NATURAL JOIN (SELECT id AS director_id, num_directed, person_id FROM mcu_site_director) AS T WHERE person_id=%s', [p_id])
+            columns = cursor.description
+            movies_directed=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            print(movies_directed)
+            if(len(movies_directed)>0):
+                context['directed'] = movies_directed
+            
+            cursor.execute('SELECT character_name FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T WHERE person_id=%s', [p_id])
+            columns = cursor.description
+            characters_played=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            print(characters_played)
+            if(len(characters_played)>0):
+                context['played'] = characters_played
+
+        template = 'person.html'
+    else:
+        all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person')
+        directors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_director)')
+        actors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_actor)')
+        
+        template = 'people.html'
+        context = {
+            'everybody': all_actorsdirectors,
+            'directors': directors,
+            'actors': actors,
+            # 'reviews_count': reviews_count,
+        }
+    return render(request, template, context)
 
 
     if request.method == "POST":

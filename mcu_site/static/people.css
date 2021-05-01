@@ -9,7 +9,7 @@ html {
     --footer-color: #34383A;
 }
 
-.person-detail {
+.person-detail, .credits {
     border-radius: .25rem;
     border: 1px solid var(--button-color);
     overflow: hidden; 
@@ -29,7 +29,7 @@ html {
     align-items: baseline;
 }
 
-.director, .actor{
+.director, .actor, .character, .movie, .creditlabel{
     font-size: medium;
     font-weight: bold;
     color: var(--text-color-muted);

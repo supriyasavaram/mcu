@@ -8,25 +8,25 @@
 {% block title %}MCU Reviews - People{% endblock %}
 
 {% block content %}
-    {% for person in everybody %}
-        <div class = "person-detail">
-            <div class = "row">
-                <div class="name">
-                    <a href="{% url 'people' %}/{{person.id}}">{{person.first_name}} {{person.last_name}}</a>
-                </div>
+    <div class="name">
+        {{person.first_name}} {{person.last_name}}
+    </div>
+    {% if played %}
+        <div class="creditlabel">Acting Credits:</div>
+        {% for character in played %}
+            <div class = "credits">
+                <div class="character">{{character.character_name}}</div>
             </div>
-            {% if person in actors %}
-                <div class="actor">
-                    Actor
-                </div>
-            {% endif %}
-            {% if person in directors %}
-                <div class="director">
-                    Director
-                </div>
-            {% endif %}
-        </div>
-    {% endfor %}
+        {% endfor %}
+    {% endif %}
+    {% if directed %}
+        <div class="creditlabel">Directing Credits:</div>
+        {% for movie in directed %}
+            <div class = "credits">
+                <div class="movie">{{movie.movie_title}}</div>
+            </div>
+        {% endfor %}
+    {% endif %}
     <!--
     <form method="POST" action="{% url 'export-csv' %}">
 
