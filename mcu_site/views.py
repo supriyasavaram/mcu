@@ -78,6 +78,26 @@ def movies(request):
     }
     return render(request, 'movies.html', context)
 
+def search(request):
+    if request.method == "POST":
+        searchquery = request.POST.get('searchquery', None)
+    context = {
+        'search': searchquery
+    }
+    if(searchquery is not None and len(searchquery)>0):
+        with connection.cursor() as cursor:
+            s='%'+searchquery+'%'
+            cursor.execute("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s]) # lol sql injection here? yike
+            columns = cursor.description
+            all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        if(len(all_movies)>0):
+            zipstuff=zip(all_movies,calculate_stars(all_movies))
+            print(zipstuff)
+            context = {
+                'movies': zipstuff,
+                'search': searchquery,
+            }
+    return render(request, 'movies.html', context)
 
 def reviews(request, m_id=None):
     #all_reviews = Review.objects.all()
