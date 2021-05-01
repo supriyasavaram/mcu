@@ -110,11 +110,16 @@ def search(request):
     return render(request, 'movies.html', context)
 
 def reviews(request, m_title=None):
+    if request.method == "POST":
+        title = request.POST.get('delete_review', None)
+        with connection.cursor() as cursor:
+            cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [request.user.id, title])
+
     #all_reviews = Review.objects.all()
     if m_title is None:
         movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
-        #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
-        
+        #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0]
+
         zipstuff=zip(movie_reviews,stars_reviews(movie_reviews))
         context = {
             'curr_reviews':movie_reviews,
@@ -159,6 +164,8 @@ def submit_review(request, m_title=None):
             cursor.execute('SELECT * FROM mcu_site_movie WHERE NOT title=%s', [m_title])
             columns = cursor.description
             results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+
+            form = CreateReviewForm(initial={'title':m_title, 'stars': 1,'review_text':"blah blah",'author':request.user.id })
     else:
         #results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
         with connection.cursor() as cursor:
@@ -192,10 +199,13 @@ def submit_review(request, m_title=None):
         else:
             print("failed")
             context = {'form': form}
-    return render(request, 'submit_review.html', {"movies": results, "movie":movie})
-
+    return render(request, 'submit_review.html', {"movies": results, "movie":movie, "form":form})
 
 def profile(request):
+    if request.method == "POST":
+        title = request.POST.get('delete_review', None)
+        with connection.cursor() as cursor:
+            cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [request.user.id, title])
     #all_reviews = Review.objects.all()
     user_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
     with connection.cursor() as cursor:

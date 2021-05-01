@@ -63,7 +63,18 @@
                         <div class="date">
                             Date: {{ review.date_written }}
                         </div>
+
                         
+                        <div class="date">
+                            <a href="/submit-review/{{ review.title.title }}">Update</a>
+                            <form method=POST action="{% url 'profile' %}">
+                                {%csrf_token%}
+                                <div>
+                                    <input type="hidden" placeholder="delete" name="delete_review" value="{{review.title.title}}">
+                                    <button type="submit">Delete</i></button>
+                                </div>
+                            </form>
+                        </div>
 
                     </div>
 
