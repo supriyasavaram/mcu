@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import Avg
 from django.db import connection
-import datetime
+from datetime import datetime
 
 
 def index(request):
@@ -41,7 +41,7 @@ def format_stars(num):
 def stars_reviews(revs):
     star_list=[]
     for rev in revs:
-        star_list.append(format_stars(rev.stars))
+        star_list.append( format_stars(rev.stars) )
     return star_list
 
 def calculate_stars(mvs):
@@ -102,9 +102,9 @@ def search(request):
             }
     return render(request, 'movies.html', context)
 
-def reviews(request, m_id=None):
+def reviews(request, m_title=None):
     #all_reviews = Review.objects.all()
-    if m_id is None:
+    if m_title is None:
         movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
         
@@ -119,10 +119,12 @@ def reviews(request, m_id=None):
         #    'reviews': zipstuff
         #}
     else:
-        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
+        movie_reviews = Review.objects.raw("SELECT * FROM mcu_site_review WHERE title_id=%s", [m_title])
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
         with connection.cursor() as cursor:
-            cursor.execute('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])
+            #m_title = "'"+m_title+"'"
+            #print(m_title)
+            cursor.execute("SELECT title, year FROM mcu_site_movie WHERE title=%s LIMIT 1", [m_title])
             columns = cursor.description
             movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             movie = movie[0]
@@ -135,19 +137,19 @@ def reviews(request, m_id=None):
     return render(request, 'reviews.html', context)
 
 
-def submit_review(request, m_id=None):
+def submit_review(request, m_title=None):
     #results = Movie.objects.all()
     movie = None
-    if m_id is not None:
+    if m_title is not None:
         #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
         #results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE title=%s', [m_title])
             columns = cursor.description
             movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             movie = movie[0]
 
-            cursor.execute('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE NOT title=%s', [m_title])
             columns = cursor.description
             results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
     else:
@@ -166,13 +168,17 @@ def submit_review(request, m_id=None):
             if (len(review)>0):
                 # feels both roundabout AND sketchy, but it seems to work. Does an UPDATE instead of an INSERT if the review already exists.
                 with connection.cursor() as cursor:
-                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
             else:
                 # form.title=form.cleaned_data.get('movie_title')
                 # form.stars = form.cleaned_data.get('stars')
                 # form.review_text = form.cleaned_data.get('review_text')
                 # form.id=request.user.id
                 form.save()
+                #with connection.cursor() as cursor:
+                #    cursor.execute("INSERT INTO mcu_site_review (id,stars,date_written,review_text,author_id,title_id) VALUES (%s,%s,'%s','%s',%s,'%s')", [5, form.cleaned_data.get('stars'), datetime.now(), form.cleaned_data('review_text'), request.user.id, form.data.get('title')] )
+                    #cursor.execute('INSERT mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+                
 
             context = {'error': 'created review'}
             print("form made")

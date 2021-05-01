@@ -46,9 +46,9 @@
             Director(s): {{ movie.directors.all |join:", " }}
         </div>
         <p>
-            <a href ="/reviews/{{ movie.id }}">See Reviews</a>
+            <a href ="/reviews/{{ movie.title }}">See Reviews</a>
             <br>
-            <a href ="/submit-review/{{ movie.id }}">Write Review</a>
+            <a href ="/submit-review/{{ movie.title }}">Write Review</a>
         </p>
         <button>
         
