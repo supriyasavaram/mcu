@@ -26,8 +26,10 @@ class Movie(models.Model):
     synopsis = models.CharField(max_length=2048)
     year = models.CharField(max_length=10)
     runtime = models.CharField(max_length=32)
+    stars = models.IntegerField(default=0)
     actors = models.ManyToManyField(Actor, through='CharacterPlayed', blank=True)
     directors = models.ManyToManyField(Director, blank=True)
+    
 
     def add_movie(self, title):
         movie = self.create(title=title)

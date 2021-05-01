@@ -49,24 +49,20 @@ def stars_reviews(revs):
     return star_list
 
 def calculate_stars(mvs):
-    all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
+    
     star_list=[]
     temp=0
     counter=0
     for movi in mvs:
-        for rev in all_reviews:
+        
             #print(movi)
             #print('hello')
             #print(rev.title.title)
-            if movi.title==rev.title.title:
-                temp+=rev.stars
-                counter+=1
-        if counter!=0:
-            star_list.append(format_stars(temp/counter))
-        else:
-            star_list.append(format_stars(0))
-        temp=0
-        counter=0
+            
+            temp=movi.stars
+            
+            star_list.append(format_stars(temp))
+        
     return star_list 
     #all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
 
