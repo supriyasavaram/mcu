@@ -19,7 +19,7 @@
                     <option disabled="true" selected>--Select Movie--</option>
                 {% endif %}
                 {% for results in movies%}
-                <option value={{results.title}}>{{results.title}} {{results.year}}
+                <option value="{{results.title}}">{{results.title}} {{results.year}}
                 {% comment %} <input type="hidden" name="title" id="title" class="form-input" value="{{results.id}}"> {% endcomment %}
                 </options>
                 {%endfor%}
