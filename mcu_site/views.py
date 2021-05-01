@@ -10,7 +10,11 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.db.models import Avg
 from django.db import connection
-from datetime import datetime
+import json
+from django.http import HttpResponse
+from django.core import serializers
+import datetime
+import csv
 
 
 def index(request):
@@ -268,3 +272,33 @@ def settings(request):
 
             context = {'form': form}
     return render(request, 'settings.html')
+
+
+def export_csv(request):
+    response=HttpResponse(content_type='text/csv')
+    response['Content-Disposition']='attachment; filename=Movie_database'+str(datetime.datetime.now())+'.csv'
+
+    writer=csv.writer(response)
+    all_movies = []
+    string=""
+    if request.method == "POST":
+        print("hello")
+        string = request.POST.get('sql')
+
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM mcu_site_'+string)
+        columns = cursor.description
+        all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+    
+    header_list=[]
+    for header in all_movies[0].keys():
+        header_list.append(header.upper())
+    writer.writerow(header_list)
+    blank_list=[]
+    for mov in all_movies:
+        
+        for thing in mov.values():
+            blank_list.append(thing)
+        writer.writerow(blank_list)
+        blank_list=[]
+    return response
