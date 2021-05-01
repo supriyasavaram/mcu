@@ -169,6 +169,31 @@ def submit_review(request, m_title=None):
     #results = Movie.objects.all()
     context=dict()
     movie = None
+    #context = {'error': ''}
+    if request.method == "POST":
+        form = CreateReviewForm(request.POST)
+        if form.is_valid():
+            #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE id=%s AND title_id=%s', [request.user.id, form.cleaned_data.get('title')])
+            review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s;', [request.user.id, form.data.get('title')])
+            if (len(review)>0):
+                # feels both roundabout AND sketchy, but it seems to work. Does an UPDATE instead of an INSERT if the review already exists.
+                with connection.cursor() as cursor:
+                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s, WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+            else:
+                # form.title=form.cleaned_data.get('movie_title')
+                # form.stars = form.cleaned_data.get('stars')
+                # form.review_text = form.cleaned_data.get('review_text')
+                # form.id=request.user.id
+                form.save()
+                #with connection.cursor() as cursor:
+                #    cursor.execute("INSERT INTO mcu_site_review (id,stars,date_written,review_text,author_id,title_id) VALUES (%s,%s,'%s','%s',%s,'%s')", [5, form.cleaned_data.get('stars'), datetime.now(), form.cleaned_data('review_text'), request.user.id, form.data.get('title')] )
+                    #cursor.execute('INSERT mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+            context ['error']= 'created review'
+            print("form made")
+        else:
+            print("failed")
+            context['form']= form
+            
     if m_title is not None:
         #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
         #results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
@@ -192,30 +217,6 @@ def submit_review(request, m_title=None):
             columns = cursor.description
             results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
     
-    #context = {'error': ''}
-    if request.method == "POST":
-        form = CreateReviewForm(request.POST)
-        if form.is_valid():
-            #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE id=%s AND title_id=%s', [request.user.id, form.cleaned_data.get('title')])
-            review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s;', [request.user.id, form.data.get('title')])
-            if (len(review)>0):
-                # feels both roundabout AND sketchy, but it seems to work. Does an UPDATE instead of an INSERT if the review already exists.
-                with connection.cursor() as cursor:
-                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
-            else:
-                # form.title=form.cleaned_data.get('movie_title')
-                # form.stars = form.cleaned_data.get('stars')
-                # form.review_text = form.cleaned_data.get('review_text')
-                # form.id=request.user.id
-                form.save()
-                #with connection.cursor() as cursor:
-                #    cursor.execute("INSERT INTO mcu_site_review (id,stars,date_written,review_text,author_id,title_id) VALUES (%s,%s,'%s','%s',%s,'%s')", [5, form.cleaned_data.get('stars'), datetime.now(), form.cleaned_data('review_text'), request.user.id, form.data.get('title')] )
-                    #cursor.execute('INSERT mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
-            context ['error']= 'created review'
-            print("form made")
-        else:
-            print("failed")
-            context['form']= form
     context["movies"] = results
     context["movie"] = movie
     return render(request, 'submit_review.html', context)
