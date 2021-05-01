@@ -71,8 +71,22 @@ def calculate_stars(mvs):
     #all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
 
 def movies(request):
+    sortby = None
+    if request.method == "POST":
+        sortby = request.POST.get('sortby')
+    if(sortby is not None):
+        print(sortby)
+        if(sortby == "yeardesc"):
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year DESC')
+        elif(sortby == "sortaz"):
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title ASC')
+        elif(sortby == "sortza"):
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title DESC')
+        else: 
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+    else: 
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
     #all_movies = Movie.objects.all()
-    all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
     # with connection.cursor() as cursor:
     #     cursor.execute('SELECT * FROM mcu_site_movie ORDER BY year ASC')
     #     columns = cursor.description
@@ -112,14 +126,14 @@ def search(request):
     return render(request, 'movies.html', context)
 
 def reviews(request, m_title=None):
-    if request.method == "POST":
+    if request.method == "POST":    # deleting a review written by you
         title = request.POST.get('delete_review', None)
         with connection.cursor() as cursor:
             cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [request.user.id, title])
 
     #all_reviews = Review.objects.all()
     if m_title is None:
-        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0]
 
         zipstuff=zip(movie_reviews,stars_reviews(movie_reviews))
@@ -153,30 +167,10 @@ def reviews(request, m_title=None):
 
 def submit_review(request, m_title=None):
     #results = Movie.objects.all()
+    context=dict()
     movie = None
-    if m_title is not None:
-        #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
-        #results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM mcu_site_movie WHERE title=%s', [m_title])
-            columns = cursor.description
-            movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
-            movie = movie[0]
-
-            cursor.execute('SELECT * FROM mcu_site_movie WHERE NOT title=%s', [m_title])
-            columns = cursor.description
-            results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
-
-            #form = CreateReviewForm(initial={'title':m_title, 'stars': 1,'review_text':"blah blah",'author':request.user.id })
-    else:
-        #results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
-        with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM mcu_site_movie')
-            columns = cursor.description
-            results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
     #context = {'error': ''}
     if request.method == "POST":
-
         form = CreateReviewForm(request.POST)
         if form.is_valid():
             #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE id=%s AND title_id=%s', [request.user.id, form.cleaned_data.get('title')])
@@ -194,14 +188,38 @@ def submit_review(request, m_title=None):
                 #with connection.cursor() as cursor:
                 #    cursor.execute("INSERT INTO mcu_site_review (id,stars,date_written,review_text,author_id,title_id) VALUES (%s,%s,'%s','%s',%s,'%s')", [5, form.cleaned_data.get('stars'), datetime.now(), form.cleaned_data('review_text'), request.user.id, form.data.get('title')] )
                     #cursor.execute('INSERT mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
-                
-
-            context = {'error': 'created review'}
+            context ['error']= 'created review'
             print("form made")
         else:
             print("failed")
-            context = {'form': form}
-    return render(request, 'submit_review.html', {"movies": results, "movie":movie})
+            context['form']= form
+            
+    if m_title is not None:
+        #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
+        #results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE title=%s', [m_title])
+            columns = cursor.description
+            movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            movie = movie[0]
+
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE NOT title=%s', [m_title])
+            columns = cursor.description
+            results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+
+            myreview = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s LIMIT 1', [request.user.id, m_title])
+            if(len(myreview)>0):
+                context["oldreview"] = myreview[0]
+    else:
+        #results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM mcu_site_movie')
+            columns = cursor.description
+            results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+    
+    context["movies"] = results
+    context["movie"] = movie
+    return render(request, 'submit_review.html', context)
 
 def profile(request):
     if request.method == "POST":

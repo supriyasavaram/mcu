@@ -8,7 +8,22 @@
 {% block title %}MCU Reviews - Movies{% endblock %}
   {% block content %}
 
-  <h2>Movies</h2>
+    <h2>Movies</h2>
+
+    <form method=POST action="{% url 'movies' %}">
+        {% csrf_token %}
+        <div class="form-group-right">
+            <select name="sortby" id="sortoptions">
+                <option disabled="true" selected>--Sort--</option>
+                <option value="yearasc">Sort by year (oldest first)</option>
+                <option value="yeardesc">Sort by year (newest first)</option>
+                <option value="sortaz" >Sort by title (A-Z)</option>
+                <option value="sortza" >Sort by title (Z-A)</option>
+            </select>
+            <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Sort</i></button>
+        </div>
+    </form>
+
 
   {% if movies %}
     {% for movie,star in movies %}

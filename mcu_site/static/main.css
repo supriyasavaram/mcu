@@ -64,6 +64,11 @@ button:hover {
     margin: 1em 0;
 }
 
+.form-group-right {
+    margin: 1em 0;
+    margin-left: auto;
+}
+
 .form-input {
     padding: .5rem;
     border: 1px solid white;
@@ -93,4 +98,14 @@ th, td{
 }
 tr:nth-child(even) {
     background-color: var(--background-color-lighter);
+}
+
+#outer
+{
+    width:100%;
+    text-align: center;
+}
+.inner
+{
+    display: inline-block;
 }
