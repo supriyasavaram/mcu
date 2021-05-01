@@ -165,7 +165,7 @@ def submit_review(request, m_title=None):
             columns = cursor.description
             results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
 
-            form = CreateReviewForm(initial={'title':m_title, 'stars': 1,'review_text':"blah blah",'author':request.user.id })
+            #form = CreateReviewForm(initial={'title':m_title, 'stars': 1,'review_text':"blah blah",'author':request.user.id })
     else:
         #results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
         with connection.cursor() as cursor:
@@ -199,7 +199,7 @@ def submit_review(request, m_title=None):
         else:
             print("failed")
             context = {'form': form}
-    return render(request, 'submit_review.html', {"movies": results, "movie":movie, "form":form})
+    return render(request, 'submit_review.html', {"movies": results, "movie":movie})
 
 def profile(request):
     if request.method == "POST":
