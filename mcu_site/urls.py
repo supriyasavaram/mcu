@@ -15,6 +15,6 @@ urlpatterns = [
     path('settings', views.settings, name='settings'),
 
     path('reviews/<str:m_title>', views.reviews, name='reviews'),
-    path('submit-review/<int:m_id>', views.submit_review, name='submit_review'),
+    path('submit-review/<str:m_title>', views.submit_review, name='submit_review'),
     path('search', views.search, name='search_movies'),
 ]

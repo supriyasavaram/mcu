@@ -41,7 +41,7 @@ def format_stars(num):
 def stars_reviews(revs):
     star_list=[]
     for rev in revs:
-        star_list.append(format_stars(rev.stars))
+        star_list.append( format_stars(rev.stars) )
     return star_list
 
 def calculate_stars(mvs):
@@ -119,11 +119,11 @@ def reviews(request, m_title=None):
         #    'reviews': zipstuff
         #}
     else:
-        movie_reviews = Review.objects.raw("SELECT * FROM mcu_site_review WHERE title='%s'", [m_title])
+        movie_reviews = Review.objects.raw("SELECT * FROM mcu_site_review WHERE title_id=%s", [m_title])
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
         with connection.cursor() as cursor:
-            m_title = "'"+m_title+"'"
-            print(m_title)
+            #m_title = "'"+m_title+"'"
+            #print(m_title)
             cursor.execute("SELECT title, year FROM mcu_site_movie WHERE title=%s LIMIT 1", [m_title])
             columns = cursor.description
             movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
@@ -137,19 +137,19 @@ def reviews(request, m_title=None):
     return render(request, 'reviews.html', context)
 
 
-def submit_review(request, m_id=None):
+def submit_review(request, m_title=None):
     #results = Movie.objects.all()
     movie = None
-    if m_id is not None:
+    if m_title is not None:
         #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
         #results = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE title=%s', [m_title])
             columns = cursor.description
             movie = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             movie = movie[0]
 
-            cursor.execute('SELECT * FROM mcu_site_movie WHERE NOT id=%s', [m_id])
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE NOT title=%s', [m_title])
             columns = cursor.description
             results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
     else:
