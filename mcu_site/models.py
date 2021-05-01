@@ -22,7 +22,7 @@ class Director(models.Model):
         return self.person.first_name+" "+self.person.last_name
 
 class Movie(models.Model):
-    title = models.CharField(max_length=150)
+    title = models.CharField(max_length=150,primary_key=True)
     synopsis = models.CharField(max_length=2048)
     year = models.CharField(max_length=10)
     runtime = models.CharField(max_length=32)

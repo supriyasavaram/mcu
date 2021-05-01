@@ -70,8 +70,12 @@ def movies(request):
         cursor.execute('SELECT * FROM mcu_site_movie')
         columns = cursor.description
         all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+    with connection.cursor() as cursor:
+        cursor.execute('SELECT * FROM mcu_site_characterplayed')
+        rows = cursor.description
+        all_people= [{rows[index][0]:row for index, row in enumerate(value)} for value in cursor.fetchall()]
     zipstuff=zip(all_movies,calculate_stars(all_movies))
-    
+    print(all_people)
     context = {
         'movies': zipstuff,
         #'stars': calculate_stars(all_movies) #format_stars(4.5)
