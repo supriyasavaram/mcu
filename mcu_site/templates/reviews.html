@@ -66,10 +66,10 @@
                             <div class="date">
 
                                 <a href="/submit-review/{{ review.title.title }}">Update</a>
-                                <form method=POST action="{% url 'delete_review' %}">
+                                <form method=POST action="/reviews/{{ review.title.title }}">
                                     {%csrf_token%}
                                     <div>
-                                        <input type="text" placeholder="Search Movies" name="searchquery">
+                                        <input type="hidden" placeholder="delete" name="delete_review" value="{{review.title.title}}">
                                         <button type="submit">Delete</i></button>
                                     </div>
                                 </form>
