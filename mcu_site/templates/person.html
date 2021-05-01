@@ -11,11 +11,13 @@
     <div class="name">
         {{person.first_name}} {{person.last_name}}
     </div>
+    <br>
     {% if played %}
         <div class="creditlabel">Acting Credits:</div>
         {% for character in played %}
             <div class = "credits">
-                <div class="character">{{character.character_name}}</div>
+                <div class="character">Character: {{character.character_name}}</div>
+                <div class="character">Alignment: {{character.alignment}}</div>
             </div>
         {% endfor %}
     {% endif %}

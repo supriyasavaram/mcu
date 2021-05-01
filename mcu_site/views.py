@@ -335,7 +335,7 @@ def export_csv(request):
 def people(request, p_id=None):
     if(p_id is not None):
         context = dict()
-        p = Person.objects.raw('SELECT * FROM mcu_site_person')[0]
+        p = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id=%s',[p_id])[0]
         context['person'] = p
         with connection.cursor() as cursor:
             cursor.execute('SELECT movie_title FROM mcu_site_directs NATURAL JOIN (SELECT id AS director_id, num_directed, person_id FROM mcu_site_director) AS T WHERE person_id=%s', [p_id])
@@ -345,7 +345,8 @@ def people(request, p_id=None):
             if(len(movies_directed)>0):
                 context['directed'] = movies_directed
             
-            cursor.execute('SELECT character_name FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T WHERE person_id=%s', [p_id])
+            #cursor.execute('SELECT character_name, alignment FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T WHERE person_id=%s', [p_id])
+            cursor.execute('SELECT character_name, alignment FROM mcu_site_character NATURAL JOIN (SELECT character_name FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T1 WHERE person_id=%s) AS T2', [p_id])
             columns = cursor.description
             characters_played=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             print(characters_played)
