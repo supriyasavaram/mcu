@@ -167,6 +167,7 @@ def reviews(request, m_title=None):
 
 def submit_review(request, m_title=None):
     #results = Movie.objects.all()
+    context=dict()
     movie = None
     if m_title is not None:
         #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
@@ -181,16 +182,18 @@ def submit_review(request, m_title=None):
             columns = cursor.description
             results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
 
-            #form = CreateReviewForm(initial={'title':m_title, 'stars': 1,'review_text':"blah blah",'author':request.user.id })
+            myreview = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s LIMIT 1', [request.user.id, m_title])
+            if(len(myreview)>0):
+                context["oldreview"] = myreview[0]
     else:
         #results = Movie.objects.raw('SELECT * FROM mcu_site_movie')
         with connection.cursor() as cursor:
             cursor.execute('SELECT * FROM mcu_site_movie')
             columns = cursor.description
             results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+    
     #context = {'error': ''}
     if request.method == "POST":
-
         form = CreateReviewForm(request.POST)
         if form.is_valid():
             #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE id=%s AND title_id=%s', [request.user.id, form.cleaned_data.get('title')])
@@ -208,14 +211,14 @@ def submit_review(request, m_title=None):
                 #with connection.cursor() as cursor:
                 #    cursor.execute("INSERT INTO mcu_site_review (id,stars,date_written,review_text,author_id,title_id) VALUES (%s,%s,'%s','%s',%s,'%s')", [5, form.cleaned_data.get('stars'), datetime.now(), form.cleaned_data('review_text'), request.user.id, form.data.get('title')] )
                     #cursor.execute('INSERT mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'), form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
-                
-
-            context = {'error': 'created review'}
+            context ['error']= 'created review'
             print("form made")
         else:
             print("failed")
-            context = {'form': form}
-    return render(request, 'submit_review.html', {"movies": results, "movie":movie})
+            context['form']= form
+    context["movies"] = results
+    context["movie"] = movie
+    return render(request, 'submit_review.html', context)
 
 def profile(request):
     if request.method == "POST":

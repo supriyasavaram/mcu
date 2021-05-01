@@ -28,17 +28,24 @@
 
         <div class="form-group">
             <label for="stars">Rating (1-5)</label>
-            <input type="text" name="stars" id="stars" class="form-input" placeholder="5">
+            {% if oldreview %}
+                <input type="text" name="stars" id="stars" class="form-input" value="{{oldreview.stars}}">
+            {% else %}
+                <input type="text" name="stars" id="stars" class="form-input" placeholder="5">
+            {% endif %}
         </div>
 
         <div class="form-group">
             <label for="date_written"></label>
-            
         </div>
 
         <div class="form-group">
-            <label for="review_text">Review Test</label>
-            <input type="text" name="review_text" id="review_text" class="form-input" placeholder="Good Movie">
+            <label for="review_text">Review Text</label>
+            {% if oldreview %}
+                <input type="text" name="review_text" id="review_text" class="form-input"value="{{oldreview.review_text}}">
+            {% else %}
+                <input type="text" name="review_text" id="review_text" class="form-input" placeholder="Good Movie">
+            {% endif %}
         </div>
         <div class="form-group">
             {% comment %} <label for="author">Written By</label> {% endcomment %}
@@ -47,7 +54,11 @@
 
         <div class="form-group">
             <button name="review" class='btn round'>
-                Post Review
+                {% if oldreview %}
+                    Update Review
+                {% else %}
+                    Post Review
+                {% endif %}
             </button>
         </div>
     </form>
