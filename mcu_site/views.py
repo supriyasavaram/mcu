@@ -126,14 +126,14 @@ def search(request):
     return render(request, 'movies.html', context)
 
 def reviews(request, m_title=None):
-    if request.method == "POST":
+    if request.method == "POST":    # deleting a review written by you
         title = request.POST.get('delete_review', None)
         with connection.cursor() as cursor:
             cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [request.user.id, title])
 
     #all_reviews = Review.objects.all()
     if m_title is None:
-        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0]
 
         zipstuff=zip(movie_reviews,stars_reviews(movie_reviews))

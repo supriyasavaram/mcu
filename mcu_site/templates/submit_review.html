@@ -52,7 +52,7 @@
         </div>
     </form>
     {% else %}
-    You must log in before you post a review
+    You must <a href="{% url 'signin'%}">log in</a> before you post a review
         
     {% endif %}
 {% endblock %}

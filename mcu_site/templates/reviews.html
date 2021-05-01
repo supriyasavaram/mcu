@@ -18,7 +18,7 @@
         {% else %}
             <div class="row justify-content-center">
                 <div class="text-center">
-                    <h3>Your reviews</h3>
+                    <h3>All Reviews</h3>
                 </div>
             </div>
         {% endif %}    
@@ -95,7 +95,7 @@
             <p>There are no reviews for this movie yet!</p>
             <p><a href ="/submit-review/{{ movie.title }}">Write a Review</a></p>
         {% elif not user.is_authenticated %}
-            <p>Please log in to see your reviews!</p>
+            <p>Please log in to see reviews!</p>
             <p><href="{% url 'signin' %}">Log In</a></p>
         {% else %}
             <p>There are no reviews!</p>
