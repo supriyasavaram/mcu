@@ -32,9 +32,7 @@
         
             <div class="title">{{ movie.title }} {{movie.year}}</div>
             <div class="stars">
-
-                    
-                    
+            
                         {% for star_list in star %}
                         {% if star_list == "Whole" %}
                         <i class="fas fa-star fa-xs"></i>
@@ -103,7 +101,7 @@
 {% endif %} -->
 
     <form method="POST" action="{% url 'export-csv' %}">
-    
+
             {%csrf_token%}
             <div class='sql'>
             <input type="hidden" placeholder="movies" name="sql" value="movie ORDER BY year ASC">

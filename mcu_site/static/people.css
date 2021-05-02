@@ -17,7 +17,7 @@ html {
     margin-bottom: 1rem;
 }
 
-.name {
+.name, .character, .movie {
     font-size: large;
     font-weight: bold;
     margin-right: .5rem;
@@ -29,15 +29,19 @@ html {
     align-items: baseline;
 }
 
-.director, .actor, .character, .movie, .creditlabel{
+.director, .actor, .creditlabel{
     font-size: medium;
     font-weight: bold;
     color: var(--text-color-muted);
     margin: .25rem 0 ;
 }
 
-.author, .date{
+.synopsis, .runtime, .alignment, .author, .date{
     font-size: small;
     color: var(--text-color-muted);
     margin: .25rem 0 ;
+}
+
+.stars i, .stars svg {
+    color: var(--star-color);
 }

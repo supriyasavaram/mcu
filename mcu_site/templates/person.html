@@ -16,8 +16,8 @@
         <div class="creditlabel">Acting Credits:</div>
         {% for character in played %}
             <div class = "credits">
-                <div class="character">Character: {{character.character_name}}</div>
-                <div class="character">Alignment: {{character.alignment}}</div>
+                <div class="character">"{{character.character_name}}"</div>
+                <div class="alignment">Alignment: {{character.alignment}}</div>
             </div>
         {% endfor %}
     {% endif %}
@@ -25,7 +25,32 @@
         <div class="creditlabel">Directing Credits:</div>
         {% for movie in directed %}
             <div class = "credits">
-                <div class="movie">{{movie.movie_title}}</div>
+                <div class="row">
+                    <div class="movie">{{movie.title}} {{movie.year}}</div>
+                    <div class="stars">
+                        {% for star_list in movie.stars %}
+                            {% if star_list == "Whole" %}
+                                <i class="fas fa-star fa-xs"></i>
+                            {% elif star_list == "Half" %}
+                                <i class="fas fa-star-half-alt fa-xs"></i>
+                            {% else %}
+                                <i class="far fa-star fa-xs"></i>
+                            {% endif %}
+                        {% endfor %} 
+                    </div>
+                </div>
+
+                <div class="synopsis">
+                    Synoposis: {{ movie.synopsis }}
+                </div>
+                <div class="runtime">
+                    Runtime: {{ movie.runtime }}
+                </div>
+                <p>
+                    <a href ="/reviews/{{ movie.title }}">See Reviews</a>
+                    <br>
+                    <a href ="/submit-review/{{ movie.title }}">Write Review</a>
+                </p>
             </div>
         {% endfor %}
     {% endif %}

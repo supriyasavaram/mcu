@@ -49,22 +49,24 @@ def stars_reviews(revs):
     return star_list
 
 def calculate_stars(mvs):
-    
     star_list=[]
     temp=0
     counter=0
     for movi in mvs:
-        
             #print(movi)
             #print('hello')
             #print(rev.title.title)
-            
             temp=movi.stars
-            
             star_list.append(format_stars(temp))
-        
     return star_list 
     #all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
+
+def add_stars_lists(mvs):
+    star_list=[]
+    for movi in mvs:
+        temp=movi['stars']
+        movi['stars'] = format_stars(temp)
+    return mvs
 
 def movies(request):
     sortby = None
@@ -338,12 +340,11 @@ def people(request, p_id=None):
         p = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id=%s',[p_id])[0]
         context['person'] = p
         with connection.cursor() as cursor:
-            cursor.execute('SELECT movie_title FROM mcu_site_directs NATURAL JOIN (SELECT id AS director_id, num_directed, person_id FROM mcu_site_director) AS T WHERE person_id=%s', [p_id])
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE title in ( SELECT movie_title AS title FROM mcu_site_directs NATURAL JOIN (SELECT id AS director_id, num_directed, person_id FROM mcu_site_director) AS T WHERE person_id=%s)', [p_id])
             columns = cursor.description
             movies_directed=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
-            print(movies_directed)
             if(len(movies_directed)>0):
-                context['directed'] = movies_directed
+                context['directed'] = add_stars_lists(movies_directed)
             
             #cursor.execute('SELECT character_name, alignment FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T WHERE person_id=%s', [p_id])
             cursor.execute('SELECT character_name, alignment FROM mcu_site_character NATURAL JOIN (SELECT character_name FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T1 WHERE person_id=%s) AS T2', [p_id])
@@ -367,25 +368,4 @@ def people(request, p_id=None):
             # 'reviews_count': reviews_count,
         }
     return render(request, template, context)
-
-
-    if request.method == "POST":
-        title = request.POST.get('delete_review', None)
-        with connection.cursor() as cursor:
-            cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [request.user.id, title])
-    #all_reviews = Review.objects.all()
-    user_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
-    with connection.cursor() as cursor:
-        cursor.execute('SELECT COUNT(id) FROM mcu_site_review WHERE author_id=%s', [request.user.id])
-        reviews_count = cursor.fetchone()[0] #this can be done easily because of Django html builtins, but using SQL seems more appropriate
-    #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
-    #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
-        
-    zipstuff=zip(user_reviews,stars_reviews(user_reviews))
-    context = {
-        'reviews': zipstuff
-        # 'reviews_count': reviews_count,
-        
-    }
-    return render(request, 'profile.html', context)
 
