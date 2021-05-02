@@ -122,8 +122,9 @@ def search(request):
 def reviews(request, m_title=None):
     if request.method == "POST":    # deleting a review written by you
         title = request.POST.get('delete_review', None)
+        author = request.POST.get('delete_user', None)
         with connection.cursor() as cursor:
-            cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [request.user.id, title])
+            cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [author, title])
 
     #all_reviews = Review.objects.all()
     if m_title is None:
@@ -244,11 +245,11 @@ def register(request):
     if request.method == "POST" and "register" in request.POST:
         form = CreateUserForm(request.POST)
         if form.is_valid():
-            username = form.cleaned_data.get('username')
+            user_name = form.cleaned_data.get('username')
             password = form.cleaned_data.get('password1')
             form.save()
             # messages.success(request, "Account created!")
-            user = authenticate(request, username=username, password=password)
+            user = authenticate(request, username=user_name, password=password)
             context = {'error': 'created account'}
         else:
             context = {'form': form}

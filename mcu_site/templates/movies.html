@@ -51,13 +51,13 @@
         <div class="runtime">
             Runtime: {{ movie.runtime }}
         </div>
-        {% comment %} <div class="actors">
+        <div class="actors">
             Stars:
             {{ movie.actors.all |join:", " }}
         </div>
         <div class="directors">
             Director(s): {{ movie.directors.all |join:", " }}
-        </div> {% endcomment %}
+        </div>
         <p>
             <a href ="/reviews/{{ movie.title }}">See Reviews</a>
             <br>

@@ -62,19 +62,26 @@
                             Date Created: {{ review.date_written }}
                         </div>
 
-                        {% if user.is_authenticated and user.username in review.author.username %} <!--review creator is user-->
+                        {% if user.is_authenticated %} <!--review creator is user-->
+                            {%if user.is_superuser or user.username in review.author.username %}
                             <div class="date">
-
-                                <a href="/submit-review/{{ review.title.title }}">Update</a>
+                                {%if user.is_superuser is False or user.username in review.author.username %}
+                                    <a href="/submit-review/{{ review.title.title }}">Update</a>
+                                {%endif%}
                                 <form method=POST action="/reviews/{{ review.title.title }}">
                                     {%csrf_token%}
                                     <div>
                                         <input type="hidden" placeholder="delete" name="delete_review" value="{{review.title.title}}">
+                                    </div>
+                                    
+                                    <div>
+                                        <input type="hidden" placeholder="delete" name="delete_user" value="{{review.author.id}}">
                                         <button type="submit">Delete</i></button>
                                     </div>
                                 </form>
 
                             </div>
+                            {%endif%}
                         {% endif %}
 
                     </div>
