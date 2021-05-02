@@ -14,15 +14,34 @@
     <br>
     {% if played %}
         <div class="creditlabel">Acting Credits:</div>
+        <div class="alignment">
+            <i>
+            {{ person.first_name}} {{person.last_name}} plays {{played|length}} character in the MCU
+            </i>
+        </div>
         {% for character in played %}
             <div class = "credits">
                 <div class="character">"{{character.character_name}}"</div>
                 <div class="alignment">Alignment: {{character.alignment}}</div>
+                <div class="alignment">Appears In:
+                    {% for mov in character.appearsin%}
+                        {% if forloop.first %}
+                            {{mov.movie_title}} {{mov.year}}
+                        {% else %}
+                            , {{mov.movie_title}} {{mov.year}}
+                        {% endif %}
+                    {% endfor %}
+                </div>
             </div>
         {% endfor %}
     {% endif %}
     {% if directed %}
         <div class="creditlabel">Directing Credits:</div>
+        <div class="synopsis">
+            <i>
+            {{ person.first_name}} {{person.last_name}} has directed {{directed|length}} movies in the MCU, and {{numdirected.num_directed}} movies in his/her career
+            </i>
+        </div>
         {% for movie in directed %}
             <div class = "credits">
                 <div class="row">
@@ -41,7 +60,7 @@
                 </div>
 
                 <div class="synopsis">
-                    Synoposis: {{ movie.synopsis }}
+                    Synopsis: {{ movie.synopsis }}
                 </div>
                 <div class="runtime">
                     Runtime: {{ movie.runtime }}
