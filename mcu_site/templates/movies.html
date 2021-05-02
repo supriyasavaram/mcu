@@ -51,10 +51,10 @@
         <div class="runtime">
             Runtime: {{ movie.runtime }}
         </div>
-        <div class="actors">
+        {% comment %} <div class="actors">
             Stars:
             {{ movie.actors.all |join:", " }}
-        </div>
+        </div> {% endcomment %}
         <div class="directors">
             Director(s): {{ movie.directors.all |join:", " }}
         </div>
