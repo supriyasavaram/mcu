@@ -296,15 +296,15 @@ def profile(request):
     #user_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
     
     with connection.cursor() as cursor:
-        cursor.execute('SELECT COUNT(id) FROM mcu_site_review WHERE author_id=%s', [request.user.id])
+        cursor.execute('SELECT COUNT(title_id) FROM mcu_site_review WHERE author_id=%s', [request.user.id])
         reviews_count = cursor.fetchone()[0] #this can be done easily because of Django html builtins, but using SQL seems more appropriate
     #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
     #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
         
     zipstuff=zip(user_reviews,stars_reviews(user_reviews))
     context = {
-        'reviews': zipstuff
-        # 'reviews_count': reviews_count,
+        'reviews': zipstuff,
+        'reviews_count': reviews_count,
         
     }
     return render(request, 'profile.html', context)
