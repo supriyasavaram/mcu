@@ -246,12 +246,14 @@ def submit_review(request, m_title=None):
                 with connection.cursor() as cursor:
                     cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
             else:
-                form.save()
-            context ['error']= 'created review'
-            print("form made")
+                obj = form.save(commit=False)
+                try:
+                    obj.save()
+                except:
+                    context['error'] = 'You can not write a review for a movie that is not out yet!'
         else:
-            print("failed")
-            context['form']= form
+            context ['error']= 'Please make sure all fields are filled!'
+            print("invalid input")
             
     if m_title is not None:
         #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
