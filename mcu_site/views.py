@@ -39,9 +39,6 @@ def format_stars(num):
         lst.append("None")
     return lst
 
-#added to work on fixing stars
-#all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
-
 def stars_reviews(revs):
     star_list=[]
     for rev in revs:
@@ -59,7 +56,6 @@ def calculate_stars(mvs):
             temp=movi.stars
             star_list.append(format_stars(temp))
     return star_list 
-    #all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
 
 def add_stars_lists(mvs):
     star_list=[]
@@ -365,7 +361,6 @@ def people(request, p_id=None):
             'everybody': all_actorsdirectors,
             'directors': directors,
             'actors': actors,
-            # 'reviews_count': reviews_count,
         }
     return render(request, template, context)
 
