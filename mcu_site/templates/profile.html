@@ -93,7 +93,7 @@
     
                         {%csrf_token%}
                         <div class='sql'>
-                        <input type="hidden" placeholder="movies" name="sql" value="reviews WHERE author_id={{request.user.id}}">
+                        <input type="hidden" placeholder="movies" name="sql" value="review WHERE author_id={{request.user.id}}">
                         <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Export CSV</i></button>
                         </div>
                 </form>

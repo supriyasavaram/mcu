@@ -139,55 +139,55 @@ def reviews(request, m_title=None):
         title = request.POST.get('delete_review', None)
         author = request.POST.get('delete_user', None)
         with connection.cursor() as cursor:
-            cursor.execute('DELETE FROM mcu_site_reviews WHERE author_id=%s AND title_id=%s', [author, title])
+            cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [author, title])
         sortby = request.POST.get('sortby', None)
         if(sortby is not None and m_title is None):
             if(sortby == "ratingasc"):
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY stars ASC')
+                    cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY stars ASC')
                     columns = cursor.description
                     movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY stars ASC')
             elif(sortby == "ratingdesc"):
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY stars DESC')
+                    cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY stars DESC')
                     columns = cursor.description
                     movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY stars DESC')
             elif(sortby == "dateasc"):
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY date_written ASC')
+                    cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY date_written ASC')
                     columns = cursor.description
                     movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY date_written ASC')
             elif(sortby == "datedesc"):
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY date_written DESC')
+                    cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY date_written DESC')
                     columns = cursor.description
                     movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY date_written DESC')
         elif(sortby is not None):
             if(sortby == "ratingasc"):
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY stars ASC', [m_title])
+                    cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY stars ASC', [m_title])
                     columns = cursor.description
                     movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY stars ASC', [m_title])
             elif(sortby == "ratingdesc"):
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY stars DESC', [m_title])
+                    cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY stars DESC', [m_title])
                     columns = cursor.description
                     movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY stars DESC', [m_title])
             elif(sortby == "dateasc"):
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY date_written ASC', [m_title])
+                    cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY date_written ASC', [m_title])
                     columns = cursor.description
                     movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY date_written ASC', [m_title])
             elif(sortby == "datedesc"):
                 with connection.cursor() as cursor:
-                    cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY date_written DESC', [m_title])
+                    cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY date_written DESC', [m_title])
                     columns = cursor.description
                     movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY date_written DESC', [m_title])
@@ -195,7 +195,7 @@ def reviews(request, m_title=None):
     if m_title is None:
         if(movie_reviews is None):
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY date_written DESC')
+                cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T ORDER BY date_written DESC')
                 columns = cursor.description
                 movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY date_written DESC')
@@ -209,7 +209,7 @@ def reviews(request, m_title=None):
     else:
         if(movie_reviews is None):
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY date_written DESC', [m_title])
+                cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE title_id=%s ORDER BY date_written DESC', [m_title])
                 columns = cursor.description
                 movie_reviews= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY date_written DESC', [m_title])
@@ -237,14 +237,14 @@ def submit_review(request, m_title=None):
         form = CreateReviewForm(request.POST)
         if form.is_valid():
             with connection.cursor() as cursor:
-                cursor.execute('SELECT * FROM mcu_site_reviews WHERE author_id=%s AND title_id=%s;', [request.user.id, form.data.get('title')])
+                cursor.execute('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s;', [request.user.id, form.data.get('title')])
                 columns = cursor.description
                 review= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE id=%s AND title_id=%s', [request.user.id, form.cleaned_data.get('title')])
             #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s;', [request.user.id, form.data.get('title')])
             if (len(review)>0): # feels both roundabout AND sketchy, works. UPDATE instead of an INSERT if review already exists.
                 with connection.cursor() as cursor:
-                    cursor.execute('UPDATE mcu_site_reviews SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
+                    cursor.execute('UPDATE mcu_site_review SET stars=%s, review_text=%s WHERE author_id=%s AND title_id=%s', [form.cleaned_data.get('stars'),  form.cleaned_data.get('review_text'), request.user.id, form.data.get('title')])
             else:
                 obj = form.save(commit=False)
                 try:
@@ -268,7 +268,7 @@ def submit_review(request, m_title=None):
             columns = cursor.description
             results = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
 
-            cursor.execute('SELECT * FROM mcu_site_reviews WHERE author_id=%s AND title_id=%s LIMIT 1', [request.user.id, m_title])
+            cursor.execute('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s LIMIT 1', [request.user.id, m_title])
             columns = cursor.description
             myreview = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             #myreview = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s LIMIT 1', [request.user.id, m_title])
@@ -289,16 +289,16 @@ def profile(request):
     if request.method == "POST":
         title = request.POST.get('delete_review', None)
         with connection.cursor() as cursor:
-            cursor.execute('DELETE FROM mcu_site_reviews WHERE author_id=%s AND title_id=%s', [request.user.id, title])
+            cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [request.user.id, title])
     with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM mcu_site_reviews NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE author_id=%s', [request.user.id])
+            cursor.execute('SELECT * FROM mcu_site_review NATURAL JOIN (SELECT username AS author, id AS author_id FROM auth_user) AS T WHERE author_id=%s', [request.user.id])
             columns = cursor.description
             user_reviews = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
     #all_reviews = Review.objects.all()
     #user_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
     
     with connection.cursor() as cursor:
-        cursor.execute('SELECT COUNT(title_id) FROM mcu_site_reviews WHERE author_id=%s', [request.user.id])
+        cursor.execute('SELECT COUNT(title_id) FROM mcu_site_review WHERE author_id=%s', [request.user.id])
         reviews_count = cursor.fetchone()[0] #this can be done easily because of Django html builtins, but using SQL seems more appropriate
     #movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s', [request.user.id])
     #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
