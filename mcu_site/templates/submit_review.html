@@ -8,7 +8,10 @@
 
 
     {% if user.is_authenticated %}
-        <h2>Write Review</h2> 
+        <h2>Write Review</h2>
+        {% if error %}
+            <h4>Error saving review: {{error}}</h4>
+        {% endif %} 
         <form method="post">
         {% csrf_token %}
         <div class="form-group">
