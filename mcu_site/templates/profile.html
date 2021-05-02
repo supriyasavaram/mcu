@@ -38,7 +38,7 @@
                     <div class="review-detail">
                         <div class="row">
                         
-                            <div class="title">{{ review.title }}</div>
+                            <div class="title">{{ review.title_id }}</div>
                              <div class="stars">
 
                                         {% for star_list in star %}
@@ -66,11 +66,11 @@
 
                         
                         <div class="date">
-                            <a href="/submit-review/{{ review.title.title }}">Update</a>
+                            <a href="/submit-review/{{ review.title_id }}">Update</a>
                             <form method=POST action="{% url 'profile' %}">
                                 {%csrf_token%}
                                 <div>
-                                    <input type="hidden" placeholder="delete" name="delete_review" value="{{review.title.title}}">
+                                    <input type="hidden" placeholder="delete" name="delete_review" value="{{review.title_id}}">
                                     <button type="submit">Delete</i></button>
                                 </div>
                             </form>

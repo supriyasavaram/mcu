@@ -56,7 +56,7 @@
                     <div class="review-detail">
                         <div class="row">
                         
-                            <div class="title">{{ review.title }}</div>
+                            <div class="title">{{ review.title_id }}</div>
                              <div class="stars">
 
                                         {% for star_list in star %}
@@ -83,15 +83,15 @@
                         </div>
 
                         {% if user.is_authenticated %} <!--review creator is user-->
-                            {%if user.is_superuser or user.username in review.author.username %}
+                            {%if user.is_superuser or user.username in review.author %}
                             <div class="date">
-                                {%if user.is_superuser is False or user.username in review.author.username %}
-                                    <a href="/submit-review/{{ review.title.title }}">Update</a>
+                                {%if user.is_superuser is False or user.username in review.author %}
+                                    <a href="/submit-review/{{ review.title_id }}">Update</a>
                                 {%endif%}
-                                <form method=POST action="/reviews/{{ review.title.title }}">
+                                <form method=POST action="/reviews/{{ review.title_id }}">
                                     {%csrf_token%}
                                     <div>
-                                        <input type="hidden" placeholder="delete" name="delete_review" value="{{review.title.title}}">
+                                        <input type="hidden" placeholder="delete" name="delete_review" value="{{review.title_id}}">
                                     </div>
                                     
                                     <div>
