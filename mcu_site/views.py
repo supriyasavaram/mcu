@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect, get_object_or_404, reverse
-from .models import Movie, Review
-from .models import Review
+from .models import Movie, Review, Person
+#from .models import Review
 from .forms import CreateReviewForm, CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -39,9 +39,6 @@ def format_stars(num):
         lst.append("None")
     return lst
 
-#added to work on fixing stars
-#all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie')
-
 def stars_reviews(revs):
     star_list=[]
     for rev in revs:
@@ -49,22 +46,23 @@ def stars_reviews(revs):
     return star_list
 
 def calculate_stars(mvs):
-    
     star_list=[]
     temp=0
     counter=0
     for movi in mvs:
-        
             #print(movi)
             #print('hello')
             #print(rev.title.title)
-            
             temp=movi.stars
-            
             star_list.append(format_stars(temp))
-        
     return star_list 
-    #all_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s', [m_id])
+
+def add_stars_lists(mvs):
+    star_list=[]
+    for movi in mvs:
+        temp=movi['stars']
+        movi['stars'] = format_stars(temp)
+    return mvs
 
 def movies(request):
     sortby = None
@@ -331,3 +329,38 @@ def export_csv(request):
         writer.writerow(blank_list)
         blank_list=[]
     return response
+
+def people(request, p_id=None):
+    if(p_id is not None):
+        context = dict()
+        p = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id=%s',[p_id])[0]
+        context['person'] = p
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE title in ( SELECT movie_title AS title FROM mcu_site_directs NATURAL JOIN (SELECT id AS director_id, num_directed, person_id FROM mcu_site_director) AS T WHERE person_id=%s)', [p_id])
+            columns = cursor.description
+            movies_directed=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            if(len(movies_directed)>0):
+                context['directed'] = add_stars_lists(movies_directed)
+            
+            #cursor.execute('SELECT character_name, alignment FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T WHERE person_id=%s', [p_id])
+            cursor.execute('SELECT character_name, alignment FROM mcu_site_character NATURAL JOIN (SELECT character_name FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T1 WHERE person_id=%s) AS T2', [p_id])
+            columns = cursor.description
+            characters_played=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            print(characters_played)
+            if(len(characters_played)>0):
+                context['played'] = characters_played
+
+        template = 'person.html'
+    else:
+        all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person')
+        directors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_director)')
+        actors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_actor)')
+        
+        template = 'people.html'
+        context = {
+            'everybody': all_actorsdirectors,
+            'directors': directors,
+            'actors': actors,
+        }
+    return render(request, template, context)
+

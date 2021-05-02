@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+
+ {% block stylesheets %}
+  <link rel="stylesheet" type="text/css" href="{% static 'people.css' %}">
+  {% endblock %}
+
+{% block title %}MCU Reviews - People{% endblock %}
+
+{% block content %}
+    {% for person in everybody %}
+        <div class = "person-detail">
+            <div class = "row">
+                <div class="name">
+                    <a href="{% url 'people' %}/{{person.id}}">{{person.first_name}} {{person.last_name}}</a>
+                </div>
+            </div>
+            {% if person in actors %}
+                <div class="actor">
+                    Actor
+                </div>
+            {% endif %}
+            {% if person in directors %}
+                <div class="director">
+                    Director
+                </div>
+            {% endif %}
+        </div>
+    {% endfor %}
+    <!--
+    <form method="POST" action="{% url 'export-csv' %}">
+
+            {%csrf_token%}
+            <div class='sql'>
+            <input type="hidden" placeholder="movies" name="sql" value="review WHERE author_id={{request.user.id}}">
+            <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Export CSV</i></button>
+            </div>
+    </form>
+    -->
+{% endblock %}
