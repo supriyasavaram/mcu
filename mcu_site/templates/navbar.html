@@ -5,7 +5,7 @@
 <div class='header-mobile'>
     <i id='burger' class="fas fa-bars fa-2x fa-fw"></i>
     <i id='close' class="fas fa-times fa-2x fa-fw"></i>
-    <a href="{% url 'home' %}"><img src="{% static 'logo.png' %}" alt="MCU Reviews Home" width="100rem"></a>
+    <a href="{% url 'index' %}"><img src="{% static 'logo.png' %}" alt="MCU Reviews Home" width="100rem"></a>
     <i id="search" onclick="openSearch()" class="fas fa-search fa-2x fa-fw"></i>
 </div>
 
@@ -15,7 +15,7 @@
 </div>
 
 <div class='nav-links-mobile'>
-    <a class='navlink-mobile' href="{% url 'home' %}">HOME</a>
+    <a class='navlink-mobile' href="{% url 'index' %}">HOME</a>
     <a class='navlink-mobile' href="{% url 'movies' %}">MOVIES</a>
     <a class='navlink-mobile' href="{% url 'reviews' %}">REVIEWS</a>
     <a class='navlink-mobile' onclick="toggleSubmenu()">ACCOUNT</button>
@@ -34,7 +34,7 @@
 
 <div class='header'>
     <div class='logo'>
-        <a href="{% url 'home' %}"><img src="{% static 'logo.png' %}" alt="MCU Reviews Home" width="200rem"></a>
+        <a href="{% url 'index' %}"><img src="{% static 'logo.png' %}" alt="MCU Reviews Home" width="200rem"></a>
     </div>
 
     <div class='header-right'>
@@ -63,7 +63,7 @@
 </div>
 
 <nav class='navbar'>
-    <a class='nav-link' href="{% url 'home' %}">HOME</a>
+    <a class='nav-link' href="{% url 'index' %}">HOME</a>
     <a class='nav-link' href="{% url 'movies' %}">MOVIES</a>
     <a class='nav-link' href="{% url 'people' %}">PEOPLE</a>
     <a class='nav-link' href="{% url 'reviews' %}">REVIEWS</a>
