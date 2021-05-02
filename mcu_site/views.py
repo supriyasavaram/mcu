@@ -81,6 +81,10 @@ def movies(request):
         print(sortby)
         if(sortby == "yeardesc"):
             all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year DESC')
+        elif(sortby == "ratingdesc"):
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY stars DESC')
+        elif(sortby == "ratingasc"):
+            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY stars ASC')
         elif(sortby == "sortaz"):
             all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title ASC')
         elif(sortby == "sortza"):
@@ -101,6 +105,7 @@ def movies(request):
     zipstuff=zip(all_movies,calculate_stars(all_movies))
     context = {
         'movies': zipstuff,
+        'sortable': True,
         #'stars': calculate_stars(all_movies) #format_stars(4.5)
     }
     return render(request, 'movies.html', context)
@@ -129,15 +134,35 @@ def search(request):
     return render(request, 'movies.html', context)
 
 def reviews(request, m_title=None):
+    movie_reviews=None
     if request.method == "POST":    # deleting a review written by you
         title = request.POST.get('delete_review', None)
         author = request.POST.get('delete_user', None)
         with connection.cursor() as cursor:
             cursor.execute('DELETE FROM mcu_site_review WHERE author_id=%s AND title_id=%s', [author, title])
-
+        sortby = request.POST.get('sortby', None)
+        if(sortby is not None and m_title is None):
+            if(sortby == "ratingasc"):
+                movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY stars ASC')
+            elif(sortby == "ratingdesc"):
+                movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY stars DESC')
+            elif(sortby == "dateasc"):
+                movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY date_written ASC')
+            elif(sortby == "datedesc"):
+                movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY date_written DESC')
+        elif(sortby is not None):
+            if(sortby == "ratingasc"):
+                movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY stars ASC', [m_title])
+            elif(sortby == "ratingdesc"):
+                movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY stars DESC', [m_title])
+            elif(sortby == "dateasc"):
+                movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY date_written ASC', [m_title])
+            elif(sortby == "datedesc"):
+                movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY date_written DESC', [m_title])
     #all_reviews = Review.objects.all()
     if m_title is None:
-        movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review')
+        if(movie_reviews is None):
+            movie_reviews = Review.objects.raw('SELECT * FROM mcu_site_review ORDER BY date_written DESC')
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0]
 
         zipstuff=zip(movie_reviews,stars_reviews(movie_reviews))
@@ -151,7 +176,8 @@ def reviews(request, m_title=None):
         #    'reviews': zipstuff
         #}
     else:
-        movie_reviews = Review.objects.raw("SELECT * FROM mcu_site_review WHERE title_id=%s", [m_title])
+        if(movie_reviews is None):
+            movie_reviews = Review.objects.raw("SELECT * FROM mcu_site_review WHERE title_id=%s ORDER BY date_written DESC", [m_title])
         #movie = Movie.objects.raw('SELECT id, title, year FROM mcu_site_movie WHERE id=%s LIMIT 1', [m_id])[0] 
         with connection.cursor() as cursor:
             #m_title = "'"+m_title+"'"
@@ -366,7 +392,25 @@ def people(request, p_id=None):
                 context['played'] = add_appears_lists(characters_played)
         template = 'person.html'
     else:
-        all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person ORDER BY first_name ASC')
+        sortby = None
+        if request.method == "POST":
+            sortby = request.POST.get('sortby')
+        if(sortby is not None):
+            print(sortby)
+            if(sortby == "fndesc"):
+                all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person ORDER BY first_name DESC')
+            elif(sortby == "lnasc"):
+                all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person ORDER BY last_name ASC')
+            elif(sortby == "lndesc"):
+                all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person ORDER BY last_name DESC')
+            elif(sortby == "actors"):
+                all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_actor) ORDER BY first_name ASC')
+            elif(sortby == "directors"):
+                all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_director) ORDER BY first_name ASC')
+            else: 
+                all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person ORDER BY first_name ASC')
+        else: 
+            all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person ORDER BY first_name ASC')
         directors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_director)')
         actors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_actor)')
         

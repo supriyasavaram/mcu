@@ -8,6 +8,22 @@
 {% block title %}MCU Reviews - People{% endblock %}
 
 {% block content %}
+    <h2>The People of the MCU</h2>
+    <form method=POST action="{% url 'people' %}">
+        {% csrf_token %}
+        <div class="form-group-right">
+            <select name="sortby" id="sortoptions">
+                <option disabled="true" selected>--Sort or Filter--</option>
+                <option value="fnasc">Sort by First Name (A-Z)</option>
+                <option value="fndesc">Sort by First Name (Z-A)</option>
+                <option value="lnasc">Sort by Last Name (A-Z)</option>
+                <option value="lndesc">Sort by Last Name (Z-A)</option>
+                <option value="actors">See Actors Only</option>
+                <option value="directors">See Directors Only</option>
+            </select>
+            <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Sort</i></button>
+        </div>
+    </form>
     {% for person in everybody %}
         <div class = "person-detail">
             <div class = "row">
