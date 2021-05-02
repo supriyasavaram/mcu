@@ -9,7 +9,9 @@
   {% block content %}
 
     <h2>Movies</h2>
-
+    {% if search %}
+        <h4>Search results for "{{search}}".</h4>
+    {% else %}
     <form method=POST action="{% url 'movies' %}">
         {% csrf_token %}
         <div class="form-group-right">
@@ -17,12 +19,15 @@
                 <option disabled="true" selected>--Sort--</option>
                 <option value="yearasc">Sort by year (oldest first)</option>
                 <option value="yeardesc">Sort by year (newest first)</option>
+                <option value="ratingdesc">Sort by rating (highest first)</option>
+                <option value="ratingasc">Sort by rating (lowest first)</option>
                 <option value="sortaz" >Sort by title (A-Z)</option>
                 <option value="sortza" >Sort by title (Z-A)</option>
             </select>
             <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Sort</i></button>
         </div>
     </form>
+    {% endif %}
 
 
   {% if movies %}
@@ -46,7 +51,7 @@
             </div>
         </div>
         <div class="synopsis">
-            Synoposis: {{ movie.synopsis }}
+            Synopsis: {{ movie.synopsis }}
         </div>
         <div class="runtime">
             Runtime: {{ movie.runtime }}

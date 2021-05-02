@@ -26,7 +26,7 @@
             {% else %}
             <a class='nav-sublink-mobile' href="{% url 'signin' %}">LOGIN</a>
             <a class='nav-sublink-mobile' href="{% url 'register' %}">REGISTER</a>
-            <a class='nav-sublink-mobile' href="{% url 'reset-password' %}">FORGOT PASSWORD?</a>
+            {%comment%}<a class='nav-sublink-mobile' href="{% url 'reset-password' %}">FORGOT PASSWORD?</a>{%endcomment%}
             {% endif %}
         </div>
 
@@ -50,12 +50,12 @@
             <div class='auth'>
                 {% if user.is_authenticated %}
                 <a class='nav-sublink-mobile' href="{% url 'profile' %}">PROFILE</a>
-                <a class='nav-sublink-mobile' href="{% url 'settings' %}">SETTINGS</a>
+                {%comment%}<a class='nav-sublink-mobile' href="{% url 'settings' %}">SETTINGS</a>{%endcomment%}
                 <a class='nav-sublink-mobile' href="{% url 'signout' %}">LOG OUT</a>
                 {% else %}
                 <a href="{% url 'signin' %}">LOGIN</a>
                 <a href="{% url 'register' %}">REGISTER</a>
-                <a href="{% url 'reset-password' %}">FORGOT PASSWORD</a>
+                {%comment%}<a href="{% url 'reset-password' %}">FORGOT PASSWORD</a>{%endcomment%}
                 {% endif %}
             </div>
         </div>
@@ -65,9 +65,9 @@
 <nav class='navbar'>
     <a class='nav-link' href="{% url 'home' %}">HOME</a>
     <a class='nav-link' href="{% url 'movies' %}">MOVIES</a>
+    <a class='nav-link' href="{% url 'people' %}">PEOPLE</a>
     <a class='nav-link' href="{% url 'reviews' %}">REVIEWS</a>
     <a class='nav-link' href="{% url 'submit_review' %}">WRITE A REVIEW</a>
-    <a class='nav-link' href="{% url 'people' %}">PEOPLE</a>
 </nav>
 
 <script>

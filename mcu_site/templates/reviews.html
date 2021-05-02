@@ -10,20 +10,40 @@
 {% block content %}
 
         {% if movie %}
-            <div class="row justify-content-center">
-                <div class="text-center">
-                    <h3>Reviews for "{{ movie.title }}" {{ movie.year }}</h3>
-                </div>
-            </div>
+            <h2>Reviews for "{{ movie.title }}" {{ movie.year }}</h2>
         {% else %}
-            <div class="row justify-content-center">
-                <div class="text-center">
-                    <h3>All Reviews</h3>
-                </div>
-            </div>
+            <h2>All Reviews</h2>
         {% endif %}    
         {% if curr_reviews %}
-            
+            {% if movie %}
+                <form method=POST action="{% url 'reviews' %}{{movie.title}}">
+                    {% csrf_token %}
+                    <div class="form-group-right">
+                        <select name="sortby" id="sortoptions">
+                            <option disabled="true" selected>--Sort--</option>
+                            <option value="ratingdesc">Sort by rating (highest first)</option>
+                            <option value="ratingasc">Sort by rating (lowest first)</option>
+                            <option value="datedesc" >Sort by date (newest first)</option>
+                            <option value="dateasc" >Sort by date (oldest first)</option>
+                        </select>
+                        <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Sort</i></button>
+                    </div>
+                </form>
+            {% else %}
+                <form method=POST action="{% url 'reviews' %}">
+                    {% csrf_token %}
+                    <div class="form-group-right">
+                        <select name="sortby" id="sortoptions">
+                            <option disabled="true" selected>--Sort--</option>
+                            <option value="ratingdesc">Sort by rating (highest first)</option>
+                            <option value="ratingasc">Sort by rating (lowest first)</option>
+                            <option value="datedesc" >Sort by date (newest first)</option>
+                            <option value="dateasc" >Sort by date (oldest first)</option>
+                        </select>
+                        <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Sort</i></button>
+                    </div>
+                </form>
+            {% endif %}
             {% comment %} <table>
                 {% if not movie %}
                     <th>Movie&ensp;</th>
@@ -100,7 +120,7 @@
             {% comment %} </table> {% endcomment %}
         {% elif movie %}
             <p>There are no reviews for this movie yet!</p>
-            <p><a href ="/submit-review/{{ movie.title }}">Write a Review</a></p>
+            <p><a href ="{% url 'submit_review' %}{{ movie.title }}">Write a Review</a></p>
         {% elif not user.is_authenticated %}
             <p>Please log in to see reviews!</p>
             <p><href="{% url 'signin' %}">Log In</a></p>
