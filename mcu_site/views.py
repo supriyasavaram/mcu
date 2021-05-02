@@ -63,6 +63,15 @@ def add_stars_lists(mvs):
         temp=movi['stars']
         movi['stars'] = format_stars(temp)
     return mvs
+def add_appears_lists(characters):
+    for c in characters:
+        cname = c.get('character_name')
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT movie_title, year FROM mcu_site_appearsin NATURAL JOIN (SELECT title AS movie_title, year FROM mcu_site_movie) AS T WHERE character_name=%s ORDER BY year ASC', [cname])
+            columns = cursor.description
+            appearsin = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        c['appearsin'] = appearsin
+    return characters
 
 def movies(request):
     sortby = None
@@ -342,18 +351,22 @@ def people(request, p_id=None):
             movies_directed=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             if(len(movies_directed)>0):
                 context['directed'] = add_stars_lists(movies_directed)
-            
+                
+                cursor.execute('SELECT num_directed FROM mcu_site_director WHERE person_id=%s',[p_id])
+                columns = cursor.description
+                num_directed=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+                context['numdirected'] = num_directed[0]
+
             #cursor.execute('SELECT character_name, alignment FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T WHERE person_id=%s', [p_id])
             cursor.execute('SELECT character_name, alignment FROM mcu_site_character NATURAL JOIN (SELECT character_name FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T1 WHERE person_id=%s) AS T2', [p_id])
             columns = cursor.description
             characters_played=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
-            print(characters_played)
+            #print(add_appears_lists(characters_played))
             if(len(characters_played)>0):
-                context['played'] = characters_played
-
+                context['played'] = add_appears_lists(characters_played)
         template = 'person.html'
     else:
-        all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person')
+        all_actorsdirectors = Person.objects.raw('SELECT * FROM mcu_site_person ORDER BY first_name ASC')
         directors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_director)')
         actors = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id IN (SELECT person_id AS id FROM mcu_site_actor)')
         
@@ -364,4 +377,3 @@ def people(request, p_id=None):
             'actors': actors,
         }
     return render(request, template, context)
-
