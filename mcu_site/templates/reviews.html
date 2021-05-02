@@ -16,7 +16,7 @@
         {% endif %}    
         {% if curr_reviews %}
             {% if movie %}
-                <form method=POST action="{% url 'reviews' %}/{{movie.title}}">
+                <form method=POST action="{% url 'reviews' %}{{movie.title}}">
                     {% csrf_token %}
                     <div class="form-group-right">
                         <select name="sortby" id="sortoptions">
@@ -120,7 +120,7 @@
             {% comment %} </table> {% endcomment %}
         {% elif movie %}
             <p>There are no reviews for this movie yet!</p>
-            <p><a href ="/submit-review/{{ movie.title }}">Write a Review</a></p>
+            <p><a href ="{% url 'submit_review' %}{{ movie.title }}">Write a Review</a></p>
         {% elif not user.is_authenticated %}
             <p>Please log in to see reviews!</p>
             <p><href="{% url 'signin' %}">Log In</a></p>
