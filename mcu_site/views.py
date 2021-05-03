@@ -145,7 +145,6 @@ def movies(request):
         'sortable': True,
         #'stars': calculate_stars(all_movies) #format_stars(4.5)
     }
-    print("????")
     return render(request, 'movies.html', context)
 
 def search(request):
@@ -163,6 +162,7 @@ def search(request):
         #all_movies = Movie.objects.raw("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s])
 
         if(len(all_movies)>0):
+            all_movies = add_director_lists(all_movies)
             zipstuff=zip(all_movies,calculate_stars(all_movies))
             print(zipstuff)
             context = {
