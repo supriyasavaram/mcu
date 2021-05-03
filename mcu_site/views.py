@@ -20,10 +20,6 @@ import csv
 def index(request):
     return render(request, 'index.html')
 
-
-def home(request):
-    return render(request, 'home.html')
-
 def format_stars(num):
     whole = int(num)
     lst = []
@@ -53,7 +49,7 @@ def calculate_stars(mvs):
             #print(movi)
             #print('hello')
             #print(rev.title.title)
-            temp=movi.stars
+            temp=movi['stars']
             star_list.append(format_stars(temp))
     return star_list 
 
@@ -63,6 +59,18 @@ def add_stars_lists(mvs):
         temp=movi['stars']
         movi['stars'] = format_stars(temp)
     return mvs
+
+def add_director_lists(mvs):
+    star_list=[]
+    for m in mvs:
+        mtitle = m.get('title')
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT first_name, last_name FROM mcu_site_person NATURAL JOIN (SELECT person_id as id, movie_title FROM mcu_site_directs WHERE movie_title=%s) AS T', [mtitle])
+            columns = cursor.description
+            directors = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        m['dirs'] = directors
+    return mvs
+
 def add_appears_lists(characters):
     for c in characters:
         cname = c.get('character_name')
@@ -80,19 +88,47 @@ def movies(request):
     if(sortby is not None):
         print(sortby)
         if(sortby == "yeardesc"):
-            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year DESC')
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM mcu_site_movie ORDER BY year DESC')
+                columns = cursor.description
+                all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year DESC')
         elif(sortby == "ratingdesc"):
-            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY stars DESC')
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM mcu_site_movie ORDER BY stars DESC')
+                columns = cursor.description
+                all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY stars DESC')
         elif(sortby == "ratingasc"):
-            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY stars ASC')
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM mcu_site_movie ORDER BY stars ASC')
+                columns = cursor.description
+                all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY stars ASC')
         elif(sortby == "sortaz"):
-            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title ASC')
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM mcu_site_movie ORDER BY title ASC')
+                columns = cursor.description
+                all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title ASC')
         elif(sortby == "sortza"):
-            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title DESC')
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM mcu_site_movie ORDER BY title DESC')
+                columns = cursor.description
+                all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY title DESC')
         else: 
-            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
-    else: 
-            all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+            with connection.cursor() as cursor:
+                cursor.execute('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+                columns = cursor.description
+                all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+            #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+    else:
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+            columns = cursor.description
+            all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
     #all_movies = Movie.objects.all()
     # with connection.cursor() as cursor:
     #     cursor.execute('SELECT * FROM mcu_site_movie ORDER BY year ASC')
@@ -102,6 +138,7 @@ def movies(request):
     #     cursor.execute('SELECT * FROM mcu_site_characterplayed')
     #     rows = cursor.description
     #     all_people= [{rows[index][0]:row for index, row in enumerate(value)} for value in cursor.fetchall()]
+    all_movies = add_director_lists(all_movies)
     zipstuff=zip(all_movies,calculate_stars(all_movies))
     context = {
         'movies': zipstuff,
@@ -118,12 +155,12 @@ def search(request):
     }
     if(searchquery is not None and len(searchquery)>0):
         s='%'+searchquery+'%'
-        all_movies = Movie.objects.raw("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s])
-        #with connection.cursor() as cursor:
-        #    s='%'+searchquery+'%'
-        #    cursor.execute("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s]) # lol sql injection here? yike
-        #    columns = cursor.description
-        #    all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        with connection.cursor() as cursor:
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE title LIKE %s', [s])
+            columns = cursor.description
+            all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+        #all_movies = Movie.objects.raw("SELECT * FROM mcu_site_movie WHERE title LIKE %s", [s])
+
         if(len(all_movies)>0):
             zipstuff=zip(all_movies,calculate_stars(all_movies))
             print(zipstuff)
