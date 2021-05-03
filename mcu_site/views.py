@@ -469,6 +469,13 @@ def people(request, p_id=None):
             #print(add_appears_lists(characters_played))
             if(len(characters_played)>0):
                 context['played'] = add_appears_lists(characters_played)
+
+                cursor.execute('SELECT agency FROM mcu_site_actor WHERE person_id=%s',[p_id])
+                columns = cursor.description
+                agency=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+                agency = agency[0]
+                if(len(agency['agency'])>0):
+                    context['agency'] = agency[0]
         template = 'person.html'
     else:
         sortby = None
