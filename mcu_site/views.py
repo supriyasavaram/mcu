@@ -1,7 +1,7 @@
 
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from .models import Movie, Person
-#from .models import Review
+from django.http import JsonResponse
 from .forms import CreateReviewForm, CreateUserForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -145,6 +145,7 @@ def movies(request):
         'sortable': True,
         #'stars': calculate_stars(all_movies) #format_stars(4.5)
     }
+    print("????")
     return render(request, 'movies.html', context)
 
 def search(request):
@@ -269,15 +270,15 @@ def submit_review(request, m_title=None):
     #results = Movie.objects.all()
     context=dict()
     movie = None
-    #context = {'error': ''}
     if request.method == "POST":
         form = CreateReviewForm(request.POST)
+        print(form)
         if form.is_valid():
+            print("hello")
             with connection.cursor() as cursor:
                 cursor.execute('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s;', [request.user.id, form.data.get('title')])
                 columns = cursor.description
                 review= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
-            #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE id=%s AND title_id=%s', [request.user.id, form.cleaned_data.get('title')])
             #review = Review.objects.raw('SELECT * FROM mcu_site_review WHERE author_id=%s AND title_id=%s;', [request.user.id, form.data.get('title')])
             if (len(review)>0): # feels both roundabout AND sketchy, works. UPDATE instead of an INSERT if review already exists.
                 with connection.cursor() as cursor:
@@ -286,11 +287,15 @@ def submit_review(request, m_title=None):
                 obj = form.save(commit=False)
                 try:
                     obj.save()
+                    return
                 except:
-                    context['error'] = 'You can not write a review for a movie that is not out yet!'
+                    response = JsonResponse({"error": 'You can not write a review for a movie that is not out yet!'})
+                    response.status_code = 403 # To announce that the user isn't allowed to publish
+                    return response
         else:
-            context ['error']= 'Please make sure all fields are filled!'
-            print("invalid input")
+            response = JsonResponse({"error": "Please make sure all fields are filled correctly!"})
+            response.status_code = 403 # To announce that the user isn't allowed to publish
+            return response
             
     if m_title is not None:
         #movie = Movie.objects.raw('SELECT * FROM mcu_site_movie WHERE id=%s', [m_id])[0]
