@@ -67,7 +67,11 @@
         <div class="directors">
             Directors: 
             {% for d in movie.dirs %}
-                {{d.first_name}} {{d.last_name}}
+                {% if forloop.first %}
+                    {{d.first_name}} {{d.last_name}}
+                {% else %}
+                    , {{d.first_name}} {{d.last_name}}
+                {% endif %}
             {% endfor %}
         </div>
         <p>
