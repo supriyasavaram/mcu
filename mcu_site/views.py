@@ -475,7 +475,7 @@ def people(request, p_id=None):
                 agency=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 agency = agency[0]
                 if(len(agency['agency'])>0):
-                    context['agency'] = agency[0]
+                    context['agency'] = agency
         template = 'person.html'
     else:
         sortby = None
