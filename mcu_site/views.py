@@ -65,7 +65,7 @@ def add_director_lists(mvs):
     for m in mvs:
         mtitle = m.get('title')
         with connection.cursor() as cursor:
-            cursor.execute('SELECT first_name, last_name FROM mcu_site_person NATURAL JOIN (SELECT person_id as id, movie_title FROM mcu_site_directs WHERE movie_title=%s) AS T', [mtitle])
+            cursor.execute('SELECT first_name, last_name, id AS d_id FROM mcu_site_person NATURAL JOIN (SELECT person_id as id, movie_title FROM mcu_site_directs WHERE movie_title=%s) AS T', [mtitle])
             columns = cursor.description
             directors = [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
         m['dirs'] = directors

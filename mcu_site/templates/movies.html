@@ -68,9 +68,9 @@
             Directors: 
             {% for d in movie.dirs %}
                 {% if forloop.first %}
-                    {{d.first_name}} {{d.last_name}}
+                    <a href="/people/{{d.d_id}}"> {{d.first_name}} {{d.last_name}} </a>
                 {% else %}
-                    , {{d.first_name}} {{d.last_name}}
+                    <a href="/people/{{d.d_id}}">, {{d.first_name}} {{d.last_name}} </a>
                 {% endif %}
             {% endfor %}
         </div>
