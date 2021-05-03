@@ -17,7 +17,7 @@
             <i>
             {{ person.first_name}} {{person.last_name}} plays {{played|length}} character in the MCU.
             {% if agency %}
-                Their agent is: {{agency.agency}}.
+                Their agent is: {{agency.agency}}
             {% endif %}
             </i>
         </div>
@@ -41,7 +41,17 @@
         <div class="creditlabel">Directing Credits:</div>
         <div class="synopsis">
             <i>
-            {{ person.first_name}} {{person.last_name}} has directed {{directed|length}} movies in the MCU, and {{numdirected.num_directed}} movies in his/her career
+            {{ person.first_name}} {{person.last_name}} has directed {{directed|length}} movies in the MCU, and {{numdirected.num_directed}} movies in his/her career.
+            {% if collaborates %}
+                He/she frequently works together with
+                {% for collab in collaborates %}
+                    {% if forloop.first %}
+                        <a href="/people/{{collab.p_id}}">{{collab.first_name}} {{collab.last_name}}</a>
+                    {% else %}
+                        , <a href="/people/{{collab.p_id}}">{{collab.first_name}} {{collab.last_name}}</a>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
             </i>
         </div>
         {% for movie in directed %}

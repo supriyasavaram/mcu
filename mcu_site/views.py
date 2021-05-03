@@ -460,6 +460,14 @@ def people(request, p_id=None):
                 columns = cursor.description
                 num_directed=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
                 context['numdirected'] = num_directed[0]
+                
+                cursor.execute('SELECT p_id_2 AS p_id, first_name, last_name FROM mcu_site_collaborates_with NATURAL JOIN (SELECT first_name, last_name, id AS p_id_2 FROM mcu_site_person) AS T WHERE p_id_1=%s',[p_id])
+                columns = cursor.description
+                collaborates=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
+                if(len(collaborates)>0):
+                    context['collaborates'] = collaborates
+                    print(context['collaborates'])
+                        
 
             #cursor.execute('SELECT character_name, alignment FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T WHERE person_id=%s', [p_id])
             cursor.execute('SELECT character_name, alignment FROM mcu_site_character NATURAL JOIN (SELECT character_name FROM mcu_site_plays WHERE person_id=%s) AS T2', [p_id])
