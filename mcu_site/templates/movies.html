@@ -60,9 +60,10 @@
             Stars:
             {{ movie.actors.all |join:", " }}
         </div> {% endcomment %}
+        {%comment%}
         <div class="directors">
             Director(s): {{ movie.directors.all |join:", " }}
-        </div>
+        </div>{%endcomment%}
         <p>
             <a href ="/reviews/{{ movie.title }}">See Reviews</a>
             <br>

@@ -411,7 +411,9 @@ def people(request, p_id=None):
         p = Person.objects.raw('SELECT * FROM mcu_site_person WHERE id=%s',[p_id])[0]
         context['person'] = p
         with connection.cursor() as cursor:
-            cursor.execute('SELECT * FROM mcu_site_movie WHERE title in ( SELECT movie_title AS title FROM mcu_site_directs NATURAL JOIN (SELECT id AS director_id, num_directed, person_id FROM mcu_site_director) AS T WHERE person_id=%s)', [p_id])
+            cursor.execute('SELECT * FROM mcu_site_movie WHERE title in ( SELECT movie_title AS title FROM mcu_site_directs WHERE person_id=%s)', [p_id])
+            
+            #cursor.execute('SELECT * FROM mcu_site_movie WHERE title in ( SELECT movie_title AS title FROM mcu_site_directs NATURAL JOIN (SELECT id AS director_id, num_directed, person_id FROM mcu_site_director) AS T WHERE person_id=%s)', [p_id])
             columns = cursor.description
             movies_directed=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             if(len(movies_directed)>0):
@@ -423,7 +425,8 @@ def people(request, p_id=None):
                 context['numdirected'] = num_directed[0]
 
             #cursor.execute('SELECT character_name, alignment FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T WHERE person_id=%s', [p_id])
-            cursor.execute('SELECT character_name, alignment FROM mcu_site_character NATURAL JOIN (SELECT character_name FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T1 WHERE person_id=%s) AS T2', [p_id])
+            cursor.execute('SELECT character_name, alignment FROM mcu_site_character NATURAL JOIN (SELECT character_name FROM mcu_site_plays WHERE person_id=%s) AS T2', [p_id])
+            #cursor.execute('SELECT character_name, alignment FROM mcu_site_character NATURAL JOIN (SELECT character_name FROM mcu_site_actor NATURAL JOIN (SELECT actor_id AS id, character_name FROM mcu_site_plays) AS T1 WHERE person_id=%s) AS T2', [p_id])
             columns = cursor.description
             characters_played=[{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             #print(add_appears_lists(characters_played))
