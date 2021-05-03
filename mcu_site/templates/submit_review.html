@@ -8,11 +8,18 @@
 
 
     {% if user.is_authenticated %}
+        
+    <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
+    <script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script src = {% static 'main.js '%} defer></script>
+
         <h2>Write Review</h2>
-        {% if error %}
-            <h4>Error saving review: {{error}}</h4>
-        {% endif %} 
-        <form method="post">
+
+        <h4><div id='statusmsg'></div></h4>
+        <form method="post" id="review-form">
         {% csrf_token %}
         <div class="form-group">
             <label for="title">Pick a movie</label>
