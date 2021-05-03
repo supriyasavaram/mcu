@@ -128,13 +128,25 @@
 </table>
 {% endif %} -->
 
+
+
+    <script>
+    var movie_sort = document.getElementByName("sortoptions")[0].value;
+
+    </script>
+
     <form method="POST" action="{% url 'export-csv' %}">
 
             {%csrf_token%}
-            <div class='sql'>
+             {% if search %}
+            
+            {% else %}
+            
+                <div class='sql'>
             <input type="hidden" placeholder="movies" name="sql" value="movie ORDER BY year ASC">
             <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Export CSV</i></button>
             </div>
+            {% endif %}
     </form>
 
   {% endblock %}

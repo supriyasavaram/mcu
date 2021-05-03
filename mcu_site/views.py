@@ -420,7 +420,7 @@ def settings(request):
 
 def export_csv(request):
     response=HttpResponse(content_type='text/csv')
-    response['Content-Disposition']='attachment; filename=Movie_database'+str(datetime.datetime.now())+'.csv'
+    response['Content-Disposition']='attachment; filename=MCU_Reviews_Database.csv'
 
     writer=csv.writer(response)
     all_movies = []
