@@ -118,6 +118,14 @@
                     </tr> {% endcomment %}
                 {% endfor %}
             {% comment %} </table> {% endcomment %}
+        <form method="POST" action="{% url 'export-csv' %}">
+
+            {%csrf_token%}
+            <div class='sql'>
+            <input type="hidden" placeholder="movies" name="sql" value="review ORDER BY title_id ASC">
+            <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Export CSV</i></button>
+            </div>
+    </form>
         {% elif movie %}
             <p>There are no reviews for this movie yet!</p>
             <p><a href ="{% url 'submit_review' %}{{ movie.title }}">Write a Review</a></p>
@@ -128,6 +136,7 @@
             <p>There are no reviews!</p>
             <p><a href="{% url 'submit_review' %}">Write a Review</a></p>
         {% endif %}
+
 
 
 {% endblock %}
