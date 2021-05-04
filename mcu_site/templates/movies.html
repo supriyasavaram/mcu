@@ -13,14 +13,13 @@
         <h4>Search results for "{{search}}".</h4>
     {% else %}
     
+    {% comment %} javascript for that sexy sexy ajax {% endcomment %}
     <script type="text/javascript"> window.CSRF_TOKEN = "{{ csrf_token }}"; </script>
-    <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
-    <script src = {% static 'main.js '%} defer></script>
+    <script src = {% static 'moviesort.js '%} defer></script>
 
-    <div >
     <form method=POST action="{% url 'movies' %}" id="sortbyform">
         {% csrf_token %}
         <div class="form-group-right">
@@ -36,7 +35,6 @@
             <button type="submit"><i id='button' class="btn btn-secondary" type="submit">Sort</i></button>
         </div>
     </form>
-    </div>
     {% endif %}
 
 
