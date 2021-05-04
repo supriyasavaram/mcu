@@ -123,6 +123,13 @@ def movies(request):
                 columns = cursor.description
                 all_movies= [{columns[index][0]:column for index, column in enumerate(value)} for value in cursor.fetchall()]
             #all_movies = Movie.objects.raw('SELECT * FROM mcu_site_movie ORDER BY year ASC')
+        all_movies = add_director_lists(all_movies)
+        zipstuff=zip(all_movies,calculate_stars(all_movies))
+        context = {
+            'movies': zipstuff,
+            'sortable': True,
+        }
+        return render(request, 'movieslist.html', context)
     else:
         with connection.cursor() as cursor:
             cursor.execute('SELECT * FROM mcu_site_movie ORDER BY year ASC')

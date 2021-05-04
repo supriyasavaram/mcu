@@ -1,0 +1,43 @@
+{% for movie,star in movies %}
+    <div class="movie-detail">
+        <div class="row">
+        
+            <div class="title">{{ movie.title }} {{movie.year}}</div>
+            <div class="stars">
+            
+                        {% for star_list in star %}
+                        {% if star_list == "Whole" %}
+                        <i class="fas fa-star fa-xs"></i>
+                        {% elif star_list == "Half" %}
+                        <i class="fas fa-star-half-alt fa-xs"></i>
+                        {% else %}
+                        <i class="far fa-star fa-xs"></i>
+                        {% endif %}
+                        {% endfor %} 
+                    
+            </div>
+        </div>
+        <div class="synopsis">
+            Synopsis: {{ movie.synopsis }}
+        </div>
+        <div class="runtime">
+            Runtime: {{ movie.runtime }}
+        </div>
+        <div class="directors">
+            Directors: 
+            {% for d in movie.dirs %}
+                {% if forloop.first %}
+                    <a href="/people/{{d.d_id}}"> {{d.first_name}} {{d.last_name}} </a>
+                {% else %}
+                    <a href="/people/{{d.d_id}}">, {{d.first_name}} {{d.last_name}} </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <p>
+            <a href ="/reviews/{{ movie.title }}">See Reviews</a>
+            <br>
+            <a href ="/submit-review/{{ movie.title }}">Write Review</a>
+        </p>
+        <button>
+    </div>
+{% endfor %}
