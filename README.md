@@ -4,7 +4,7 @@
 
 # MCU Reviews
 
-(http://mcu-reviews.herokuapp.com/)
+http://mcu-reviews.herokuapp.com/
 
 ### About
 A movie database and review system web application for Marvel Cinematic Universe fans
