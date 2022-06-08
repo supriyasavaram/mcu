@@ -4,14 +4,16 @@
 
 # MCU Reviews
 
+(http://mcu-reviews.herokuapp.com/)
+
 ### About
-yes mcu fun good yup
+A movie database and review system web application for Marvel Cinematic Universe fans
 
 ### Stack
 
 - Python
 - Django
-- SQLite (?)
+- SQLite
 - Bootstrap 4
 - Javascript (jQuery)
 
